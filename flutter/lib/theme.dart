@@ -40,5 +40,10 @@ ThemeData buildTheme() {
         secondary: accentColor,
       ),
     ),
+    dialogTheme: base.dialogTheme.copyWith(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
   );
 }
