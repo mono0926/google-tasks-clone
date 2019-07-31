@@ -4,7 +4,7 @@ ThemeData buildTheme() {
   final base = ThemeData.light();
   const accentColor = Color(0xFF3B72E2);
   const backgroundColor = Colors.white;
-  const labelColor = Color(0xFF242424);
+  const labelColor = Colors.black;
   return base.copyWith(
 //    primaryColor: backgroundColor,
     primaryColorBrightness: Brightness.light,

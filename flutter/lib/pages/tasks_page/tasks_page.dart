@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/pages/tasks_page/input_sheet/input_sheet.dart';
 import 'package:google_tasks/widgets/widgets.dart';
-
-import 'input_sheet.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage({Key key}) : super(key: key);
@@ -21,7 +20,7 @@ class TasksPage extends StatelessWidget {
             // 縦に長く延びられるように。まだよく理解できてない。
             isScrollControlled: true,
             context: context,
-            builder: (context) => const InputSheet(),
+            builder: (context) => InputSheet.withDependencies(),
           );
         },
         child: const GoogleAdd(),
