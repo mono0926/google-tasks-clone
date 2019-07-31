@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 ThemeData buildTheme() {
   final base = ThemeData.light();
+  const accentColor = Color(0xFF3B72E2);
   const backgroundColor = Colors.white;
   const labelColor = Color(0xFF242424);
   return base.copyWith(
 //    primaryColor: backgroundColor,
-//    accentColor: backgroundColor,
+    primaryColorBrightness: Brightness.light,
+    accentColor: accentColor,
     scaffoldBackgroundColor: backgroundColor,
     colorScheme: base.colorScheme.copyWith(
       secondary: backgroundColor,
 //      onSecondary: labelColor,
     ),
     accentIconTheme: base.accentIconTheme.copyWith(
-      color: labelColor,
+      color: accentColor,
     ),
     primaryTextTheme: base.primaryTextTheme.apply(
       bodyColor: labelColor,
@@ -26,6 +28,17 @@ ThemeData buildTheme() {
     bottomAppBarTheme: base.bottomAppBarTheme.copyWith(
       elevation: 0,
       shape: const CircularNotchedRectangle(),
+    ),
+    bottomSheetTheme: base.bottomSheetTheme.copyWith(
+//        backgroundColor: Colors.yellow,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+    buttonTheme: base.buttonTheme.copyWith(
+      colorScheme: base.buttonTheme.colorScheme.copyWith(
+        secondary: accentColor,
+      ),
     ),
   );
 }
