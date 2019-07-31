@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'due_date_time_sheet.dart';
+import 'due_date_time_dialog.dart';
 
 class InputSheet extends StatelessWidget {
   const InputSheet._({Key key}) : super(key: key);
@@ -87,10 +87,9 @@ class InputSheet extends StatelessWidget {
       icon: Icon(Icons.calendar_today),
       padding: _elementPadding,
       onPressed: () {
-        showModalBottomSheet<void>(
-          isScrollControlled: true,
+        showDialog<void>(
           context: context,
-          builder: (context) => const DueDateTimeSheet(),
+          builder: (context) => const DueDateTimeDialog(),
         );
       },
     );
