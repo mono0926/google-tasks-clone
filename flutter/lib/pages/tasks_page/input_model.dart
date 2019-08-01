@@ -14,15 +14,6 @@ class InputModel extends ChangeNotifier {
   bool get isInputSheetShown => _isInputSheetShown;
   bool get isDetailsShown => _isDetailsShown;
 
-  void toggleInputSheet({@required bool shown}) {
-    _isInputSheetShown = shown;
-    if (!shown) {
-      _isDetailsShown = false;
-      _task = const Task.empty();
-    }
-    notifyListeners();
-  }
-
   void showDetails() {
     _isDetailsShown = true;
     notifyListeners();

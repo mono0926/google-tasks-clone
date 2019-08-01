@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,14 @@ import 'due_date_time_dialog.dart';
 const _elementPadding = EdgeInsets.all(16);
 
 class InputSheet extends StatefulWidget {
-  const InputSheet({Key key}) : super(key: key);
+  const InputSheet._({Key key}) : super(key: key);
+
+  static Widget withDependencies() {
+    return ChangeNotifierProxyProvider<TasksHolder, InputModel>(
+      builder: (context, holder, model) => model ?? InputModel(holder: holder),
+      child: const InputSheet._(),
+    );
+  }
 
   @override
   _InputSheetState createState() => _InputSheetState();
@@ -157,8 +165,8 @@ class _InputSheetState extends State<InputSheet>
             title: _titleController.text,
             details: _detailsController.text,
           )
-          ..save()
-          ..toggleInputSheet(shown: false);
+          ..save();
+        Navigator.of(context).pop();
       },
     );
   }

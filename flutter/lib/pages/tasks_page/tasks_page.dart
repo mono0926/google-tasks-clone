@@ -1,98 +1,139 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/model.dart';
-import 'package:google_tasks/pages/tasks_page/input_sheet/input_sheet.dart';
-import 'package:mono_kit/mono_kit.dart';
+import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'input_model.dart';
-import 'tasks_main_page.dart';
+import 'input_sheet/input_sheet.dart';
+import 'tasks_model.dart';
 
-class TasksPage extends StatefulWidget {
+class TasksPage extends StatelessWidget {
   const TasksPage._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksHolder, InputModel>(
-      builder: (context, holder, model) => model ?? InputModel(holder: holder),
+    return ChangeNotifierProxyProvider<TasksHolder, TasksModel>(
+      builder: (context, holder, model) => model ?? TasksModel(holder: holder),
       child: const TasksPage._(),
     );
   }
 
   @override
-  _TasksPageState createState() => _TasksPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet<void>(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) => InputSheet.withDependencies(),
+          );
+        },
+        child: const GoogleAdd(),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              offset: Offset.zero,
+              blurRadius: 8,
+            )
+          ],
+        ),
+        child: BottomAppBar(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.more_horiz),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: const _Body(),
+    );
+  }
 }
 
-class _TasksPageState extends State<TasksPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _fadeAnimation;
-  Animation<double> _modalOffsetAnimation;
-
-  InputModel get _model => Provider.of<InputModel>(context, listen: false);
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 300),
-    );
-    _fadeAnimation =
-        _animationController.drive(CurveTween(curve: Curves.easeInOut));
-    _modalOffsetAnimation = _fadeAnimation.drive(Tween<double>(
-      begin: -200,
-      end: 0,
-    ));
-
-    _model.addListener(() {
-      if (_model.isInputSheetShown) {
-        _animationController.forward();
-      } else {
-        _animationController.reverse();
-        FocusScope.of(context).unfocus();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
+class _Body extends StatelessWidget {
+  const _Body({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        TasksMainPage.withDependencies(context),
-        _buildOverlay(),
-        AnimatedBuilder(
-          animation: _modalOffsetAnimation,
-          builder: (context, child) {
-            if (_modalOffsetAnimation.isDismissed) {
-              return const SizedBox();
-            }
-            return Positioned.fill(
-              top: null,
-              bottom: _modalOffsetAnimation.value,
-              child: child,
-            );
-          },
-          child: const InputSheet(),
-        ),
-      ],
-    );
-  }
+    final model = Provider.of<TasksModel>(context);
+    final tasks = model.tasks;
 
-  Widget _buildOverlay() {
-    return BetterFadeTransition(
-      opacity: _fadeAnimation,
-      child: GestureDetector(
-        onTap: () {
-          _model.toggleInputSheet(shown: false);
-        },
-        child: Container(
-          color: Colors.black.withOpacity(0.3),
-        ),
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 48,
+                vertical: 16,
+              ),
+              child: Text(
+                'My Tasks',
+                style: Theme.of(context).textTheme.headline,
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final task = tasks[index];
+                return Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: Theme.of(context).dividerColor,
+                    width: 1 / MediaQuery.of(context).devicePixelRatio,
+                  ))),
+                  child: InkWell(
+                    onTap: () {},
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.radio_button_unchecked),
+                          onPressed: () {},
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(task.title),
+                              if ((task.details ?? '').isNotEmpty) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  task.details,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              ],
+                              if (task.due != null)
+                                DueButton(
+                                  due: task.due,
+                                  onPressed: () {},
+                                ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              childCount: tasks.length,
+            ),
+          )
+        ],
       ),
     );
   }
