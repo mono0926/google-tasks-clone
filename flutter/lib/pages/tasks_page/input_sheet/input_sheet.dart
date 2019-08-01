@@ -26,6 +26,9 @@ class _InputSheetState extends State<InputSheet>
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     return Material(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Padding(
