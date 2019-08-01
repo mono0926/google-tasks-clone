@@ -33,7 +33,7 @@ class _TasksPageState extends State<TasksPage>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 300),
     );
     _fadeAnimation =
         _animationController.drive(CurveTween(curve: Curves.easeInOut));
