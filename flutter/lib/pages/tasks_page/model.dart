@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class Model extends ChangeNotifier {
-  bool _isInputSheetShown = false;
-  bool _isDescriptionShown = false;
+  var _isInputSheetShown = false;
+  var _isDescriptionShown = false;
   bool get isInputSheetShown => _isInputSheetShown;
   bool get isDescriptionShown => _isDescriptionShown;
 
