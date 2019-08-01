@@ -7,10 +7,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  mono_kit: any
   provider: any
   rxdart: any
   simple_logger: any
-  mono_kit: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
