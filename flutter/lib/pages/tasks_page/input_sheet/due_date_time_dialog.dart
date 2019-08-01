@@ -55,7 +55,7 @@ class DueDateTimeDialog extends StatelessWidget {
                   },
                 ),
                 FlatButton(
-                  child: Text('DONE'),
+                  child: const Text('DONE'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

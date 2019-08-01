@@ -1,44 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../model.dart';
 import 'due_date_time_dialog.dart';
 
 class InputSheet extends StatelessWidget {
-  const InputSheet._({Key key}) : super(key: key);
-
-  static Widget withDependencies() {
-    return ChangeNotifierProvider(
-      builder: (context) => _Model(),
-      child: const InputSheet._(),
-    );
-  }
+  const InputSheet({Key key}) : super(key: key);
 
   static const _elementPadding = EdgeInsets.all(16);
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<_Model>(context);
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
+    final model = Provider.of<Model>(context);
+    return Material(
       child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildTitleTextField(),
-            if (model.isDescriptionShown) _buildDescriptionTextField(context),
-            IconTheme(
-              data: Theme.of(context).accentIconTheme,
-              child: Row(
-                children: [
-                  _buildDetailButton(context),
-                  _buildDueDateButton(context),
-                  Spacer(),
-                  _buildSaveButton()
-                ],
-              ),
-            )
-          ],
+        padding: MediaQuery.of(context).viewInsets,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildTitleTextField(),
+              if (model.isDescriptionShown) _buildDescriptionTextField(context),
+              IconTheme(
+                data: Theme.of(context).accentIconTheme,
+                child: Row(
+                  children: [
+                    _buildDetailButton(context),
+                    _buildDueDateButton(context),
+                    Spacer(),
+                    _buildSaveButton()
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -74,7 +70,7 @@ class InputSheet extends StatelessWidget {
   }
 
   Widget _buildDetailButton(BuildContext context) {
-    final model = Provider.of<_Model>(context);
+    final model = Provider.of<Model>(context);
     return IconButton(
       icon: Icon(Icons.format_align_left),
       padding: _elementPadding,
@@ -102,15 +98,5 @@ class InputSheet extends StatelessWidget {
       child: const Text('Save'),
       onPressed: () {},
     );
-  }
-}
-
-class _Model extends ChangeNotifier {
-  bool _isDescriptionShown = false;
-  bool get isDescriptionShown => _isDescriptionShown;
-
-  void showDescription() {
-    _isDescriptionShown = true;
-    notifyListeners();
   }
 }

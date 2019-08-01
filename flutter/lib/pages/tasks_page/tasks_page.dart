@@ -1,53 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/pages/tasks_page/input_sheet/input_sheet.dart';
-import 'package:google_tasks/widgets/widgets.dart';
+import 'package:mono_kit/mono_kit.dart';
+import 'package:provider/provider.dart';
 
-class TasksPage extends StatelessWidget {
-  const TasksPage({Key key}) : super(key: key);
+import 'model.dart';
+import 'tasks_main_page.dart';
+
+class TasksPage extends StatefulWidget {
+  const TasksPage._({Key key}) : super(key: key);
+
+  static Widget withDependencies() {
+    return ChangeNotifierProvider(
+      builder: (context) => Model(),
+      child: const TasksPage._(),
+    );
+  }
+
+  @override
+  _TasksPageState createState() => _TasksPageState();
+}
+
+class _TasksPageState extends State<TasksPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  Animation<double> _fadeAnimation;
+  Animation<double> _modalOffsetAnimation;
+
+  Model get _model => Provider.of<Model>(context, listen: false);
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400),
+    );
+    _fadeAnimation =
+        _animationController.drive(CurveTween(curve: Curves.easeInOut));
+    _modalOffsetAnimation = _fadeAnimation.drive(Tween<double>(
+      begin: -200,
+      end: 0,
+    ));
+
+    _model.addListener(() {
+      if (_model.isInputSheetShown) {
+        _animationController.forward();
+      } else {
+        _animationController.reverse();
+        FocusScope.of(context).unfocus();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      // TODO(mono): 本物はAppBarではなくSliver使うと良さそう
-      appBar: AppBar(
-        title: const Text('My Tasks'),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO(mono): barrier色をもっと明るくしたいが_ModalBottomSheetRouteで決めうちされているので妥協
-          showModalBottomSheet<void>(
-            // 縦に長く延びられるように。まだよく理解できてない。
-            isScrollControlled: true,
-            context: context,
-            builder: (context) => InputSheet.withDependencies(),
-          );
+    return Stack(
+      children: [
+        const TasksMainPage(),
+        _buildOverlay(),
+        AnimatedBuilder(
+          animation: _modalOffsetAnimation,
+          builder: (context, child) {
+            if (_modalOffsetAnimation.isDismissed) {
+              return const SizedBox();
+            }
+            return Positioned.fill(
+              top: null,
+              bottom: _modalOffsetAnimation.value,
+              child: child,
+            );
+          },
+          child: const InputSheet(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOverlay() {
+    return BetterFadeTransition(
+      opacity: _fadeAnimation,
+      child: GestureDetector(
+        onTap: () {
+          _model.toggleInputSheet(shown: false);
         },
-        child: const GoogleAdd(),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            offset: Offset.zero,
-            blurRadius: 8,
-          )
-        ]),
-        child: BottomAppBar(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.more_horiz),
-                onPressed: () {},
-              ),
-            ],
-          ),
+        child: Container(
+          color: Colors.black.withOpacity(0.3),
         ),
       ),
     );
