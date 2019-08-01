@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import '../model.dart';
 import 'due_date_time_dialog.dart';
 
+const _elementPadding = EdgeInsets.all(16);
+
 class InputSheet extends StatefulWidget {
   const InputSheet({Key key}) : super(key: key);
-
-  static const _elementPadding = EdgeInsets.all(16);
 
   @override
   _InputSheetState createState() => _InputSheetState();
@@ -17,10 +17,8 @@ class InputSheet extends StatefulWidget {
 class _InputSheetState extends State<InputSheet>
     with RouteAware, RouteObserverMixin {
   final _titleFocusNode = FocusNode();
-  final _descriptionFocusNode = FocusNode();
+  final _detailsFocusNode = FocusNode();
   FocusNode _lastFocusNode;
-
-  Model get _model => Provider.of<Model>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class _InputSheetState extends State<InputSheet>
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildTitleTextField(),
-              if (model.isDescriptionShown) _buildDescriptionTextField(context),
+              if (model.isDetailsShown) _buildDetailsTextField(context),
               IconTheme(
                 data: Theme.of(context).accentIconTheme,
                 child: Row(
@@ -71,11 +69,11 @@ class _InputSheetState extends State<InputSheet>
     );
   }
 
-  Padding _buildDescriptionTextField(BuildContext context) {
+  Widget _buildDetailsTextField(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
-        focusNode: _descriptionFocusNode,
+        focusNode: _detailsFocusNode,
         decoration: InputDecoration(
           hintText: 'Add details',
           border: InputBorder.none,
@@ -89,13 +87,13 @@ class _InputSheetState extends State<InputSheet>
     final model = Provider.of<Model>(context);
     return IconButton(
       icon: Icon(Icons.format_align_left),
-      padding: InputSheet._elementPadding,
-      onPressed: model.isDescriptionShown
+      padding: _elementPadding,
+      onPressed: model.isDetailsShown
           ? null
           : () {
-              model.showDescription();
+              model.showDetails();
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                FocusScope.of(context).requestFocus(_detailsFocusNode);
               });
             },
     );
@@ -104,7 +102,7 @@ class _InputSheetState extends State<InputSheet>
   Widget _buildDueDateButton(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.calendar_today),
-      padding: InputSheet._elementPadding,
+      padding: _elementPadding,
       onPressed: () {
         showDialog<void>(
           context: context,
@@ -137,7 +135,7 @@ class _InputSheetState extends State<InputSheet>
 
   @override
   void didPushNext() {
-    for (final node in [_titleFocusNode, _descriptionFocusNode]) {
+    for (final node in [_titleFocusNode, _detailsFocusNode]) {
       if (node.hasFocus) {
         _lastFocusNode = node;
         break;

@@ -2,20 +2,20 @@ import 'package:flutter/foundation.dart';
 
 class Model extends ChangeNotifier {
   var _isInputSheetShown = false;
-  var _isDescriptionShown = false;
+  var _isDetailsShown = false;
   bool get isInputSheetShown => _isInputSheetShown;
-  bool get isDescriptionShown => _isDescriptionShown;
+  bool get isDetailsShown => _isDetailsShown;
 
   void toggleInputSheet({@required bool shown}) {
     _isInputSheetShown = shown;
     if (!shown) {
-      _isDescriptionShown = false;
+      _isDetailsShown = false;
     }
     notifyListeners();
   }
 
-  void showDescription() {
-    _isDescriptionShown = true;
+  void showDetails() {
+    _isDetailsShown = true;
     notifyListeners();
   }
 }
