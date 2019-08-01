@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:google_tasks/widgets/widgets.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class _InputSheetState extends State<InputSheet>
             children: [
               _buildTitleTextField(),
               if (model.isDetailsShown) _buildDetailsTextField(context),
-              if (model.task.due != null) _buildDueLabel(context),
+              if (model.task.due != null) _buildDueButton(context),
               IconTheme(
                 data: Theme.of(context).accentIconTheme,
                 child: Row(
@@ -74,47 +74,16 @@ class _InputSheetState extends State<InputSheet>
     );
   }
 
-  Widget _buildDueLabel(BuildContext context) {
+  Widget _buildDueButton(BuildContext context) {
     final model = Provider.of<InputModel>(context);
     final due = model.task.due;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: RaisedButton(
-        color: Theme.of(context).inputDecorationTheme.fillColor,
-        elevation: 0,
-        highlightElevation: 0,
-        shape: OutlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).dividerColor),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+      child: DueButton(
+        due: due,
         onPressed: _showDueDateTimeDialog,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.calendar_today,
-              size: 16,
-              color: Theme.of(context).accentColor,
-            ),
-            const SizedBox(width: 8),
-            Text(DateFormat.MMMEd().format(due.dateTime)),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 24,
-              height: 24,
-              child: IconButton(
-                icon: Icon(Icons.close),
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  model.task = model.task.copyWith(clearDue: true);
-                },
-              ),
-            )
-          ],
-        ),
+        onClosePressed: () => model.task = model.task.copyWith(clearDue: true),
       ),
     );
   }

@@ -104,6 +104,7 @@ class _Body extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(task.title),
                               if (task.details != null) ...[
@@ -112,7 +113,12 @@ class _Body extends StatelessWidget {
                                   task.details,
                                   style: Theme.of(context).textTheme.caption,
                                 ),
-                              ]
+                              ],
+                              if (task.due != null)
+                                DueButton(
+                                  due: task.due,
+                                  onPressed: () {},
+                                ),
                             ],
                           ),
                         ),
