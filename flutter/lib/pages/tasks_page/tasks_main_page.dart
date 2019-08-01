@@ -107,7 +107,7 @@ class _Body extends StatelessWidget {
                             children: <Widget>[
                               Text(task.title),
                               if (task.details != null) ...[
-                                SizedBox(height: 2),
+                                const SizedBox(height: 2),
                                 Text(
                                   task.details,
                                   style: Theme.of(context).textTheme.caption,
