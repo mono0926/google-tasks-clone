@@ -26,7 +26,8 @@ class TasksPage extends StatelessWidget {
           showModalBottomSheet<void>(
             isScrollControlled: true,
             context: context,
-            builder: (context) => InputSheet.withDependencies(),
+            builder: (context) =>
+                SafeArea(child: InputSheet.withDependencies()),
           );
         },
         child: const GoogleAdd(),

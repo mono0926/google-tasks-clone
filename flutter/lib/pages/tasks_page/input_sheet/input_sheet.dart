@@ -45,29 +45,36 @@ class _InputSheetState extends State<InputSheet>
     final model = Provider.of<InputModel>(context);
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTitleTextField(),
-            if (model.isDetailsShown)
-              Flexible(child: _buildDetailsTextField(context)),
-            if (model.task.due != null) _buildDueButton(context),
-            IconTheme(
-              data: Theme.of(context).accentIconTheme,
-              child: Row(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: constraints.maxHeight - 44),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildDetailButton(context),
-                  _buildDueDateButton(context),
-                  Spacer(),
-                  _buildSaveButton()
+                  _buildTitleTextField(),
+                  if (model.isDetailsShown)
+                    Flexible(child: _buildDetailsTextField(context)),
+                  if (model.task.due != null) _buildDueButton(context),
+                  IconTheme(
+                    data: Theme.of(context).accentIconTheme,
+                    child: Row(
+                      children: [
+                        _buildDetailButton(context),
+                        _buildDueDateButton(context),
+                        Spacer(),
+                        _buildSaveButton()
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
