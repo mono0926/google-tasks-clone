@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,8 @@ class _InputSheetState extends State<InputSheet>
   final _detailsFocusNode = FocusNode();
   FocusNode _lastFocusNode;
 
+  Model get _model => Provider.of<Model>(context, listen: false);
+
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
@@ -33,9 +36,11 @@ class _InputSheetState extends State<InputSheet>
           padding: const EdgeInsets.all(8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTitleTextField(),
               if (model.isDetailsShown) _buildDetailsTextField(context),
+              if (model.task.due != null) _buildDueLabel(context),
               IconTheme(
                 data: Theme.of(context).accentIconTheme,
                 child: Row(
@@ -65,6 +70,51 @@ class _InputSheetState extends State<InputSheet>
         ),
         minLines: 1,
         maxLines: 30,
+      ),
+    );
+  }
+
+  Widget _buildDueLabel(BuildContext context) {
+    final model = Provider.of<Model>(context);
+    final due = model.task.due;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: RaisedButton(
+        color: Theme.of(context).inputDecorationTheme.fillColor,
+        elevation: 0,
+        highlightElevation: 0,
+        shape: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.calendar_today,
+              size: 16,
+              color: Theme.of(context).accentColor,
+            ),
+            const SizedBox(width: 8),
+            Text(DateFormat.MMMEd().format(due.dateTime)),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 24,
+              height: 24,
+              child: IconButton(
+                icon: Icon(Icons.close),
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  model.task = model.task.copyWith(clearDue: true);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -106,7 +156,9 @@ class _InputSheetState extends State<InputSheet>
       onPressed: () {
         showDialog<void>(
           context: context,
-          builder: (context) => const DueDateTimeDialog(),
+          builder: (context) => DueDateTimeDialog.withDependencies(
+            model: _model,
+          ),
         );
       },
     );

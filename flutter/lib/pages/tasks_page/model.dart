@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:google_tasks/model/model.dart';
 
 class Model extends ChangeNotifier {
+  var _task = const Task.empty();
   var _isInputSheetShown = false;
   var _isDetailsShown = false;
+
+  Task get task => _task;
   bool get isInputSheetShown => _isInputSheetShown;
   bool get isDetailsShown => _isDetailsShown;
 
@@ -10,12 +14,18 @@ class Model extends ChangeNotifier {
     _isInputSheetShown = shown;
     if (!shown) {
       _isDetailsShown = false;
+      _task = const Task.empty();
     }
     notifyListeners();
   }
 
   void showDetails() {
     _isDetailsShown = true;
+    notifyListeners();
+  }
+
+  set task(Task task) {
+    _task = task;
     notifyListeners();
   }
 }

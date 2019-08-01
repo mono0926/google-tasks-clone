@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/model/model.dart';
+import 'package:provider/provider.dart';
 
-class DueDateTimeDialog extends StatelessWidget {
-  const DueDateTimeDialog({Key key}) : super(key: key);
+import '../model.dart';
+
+class DueDateTimeDialog extends StatefulWidget {
+  const DueDateTimeDialog._({Key key}) : super(key: key);
+
+  static Widget withDependencies({@required Model model}) {
+    return ChangeNotifierProvider<Model>.value(
+      value: model,
+      child: const DueDateTimeDialog._(),
+    );
+  }
+
+  @override
+  _DueDateTimeDialogState createState() => _DueDateTimeDialogState();
+}
+
+class _DueDateTimeDialogState extends State<DueDateTimeDialog> {
+  DateTime _date;
+  Model get _model => Provider.of<Model>(context, listen: false);
+  Task get _task => _model.task;
+
+  @override
+  void initState() {
+    super.initState();
+    _date = _task.due?.dateTime ?? DateTime.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -17,10 +44,10 @@ class DueDateTimeDialog extends StatelessWidget {
                 children: [
                   const SizedBox(height: 16),
                   MonthPicker(
-                    selectedDate: DateTime.now(),
-                    onChanged: (x) {},
+                    selectedDate: _date,
+                    onChanged: (date) => setState(() => _date = date),
                     firstDate: DateTime.now().subtract(Duration(days: 365)),
-                    lastDate: DateTime.now().add(Duration(days: 365)),
+                    lastDate: DateTime.now().add(Duration(days: 3650)),
                   ),
                   ListTile(
                     leading: Icon(Icons.access_time),
@@ -54,17 +81,25 @@ class DueDateTimeDialog extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                 ),
-                FlatButton(
-                  child: const Text('DONE'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
+                _buildDoneButton()
               ],
             ),
           )
         ],
       ),
+    );
+  }
+
+  FlatButton _buildDoneButton() {
+    return FlatButton(
+      child: const Text('DONE'),
+      onPressed: () {
+        _model.task = _task.copyWith(
+          due: (_task.due ?? const Due(null, includeTime: false))
+              .copyWith(_date),
+        );
+        Navigator.of(context).pop();
+      },
     );
   }
 }

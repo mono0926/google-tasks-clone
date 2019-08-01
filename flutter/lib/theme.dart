@@ -5,6 +5,7 @@ ThemeData buildTheme() {
   const accentColor = Color(0xFF3B72E2);
   const backgroundColor = Colors.white;
   const labelColor = Colors.black;
+  const fillColor = Color(0xFFF5F5F5);
   return base.copyWith(
 //    primaryColor: backgroundColor,
     primaryColorBrightness: Brightness.light,
@@ -36,6 +37,9 @@ ThemeData buildTheme() {
       ),
     ),
     buttonTheme: base.buttonTheme.copyWith(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       colorScheme: base.buttonTheme.colorScheme.copyWith(
         secondary: accentColor,
       ),
@@ -44,6 +48,9 @@ ThemeData buildTheme() {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: fillColor,
     ),
   );
 }
