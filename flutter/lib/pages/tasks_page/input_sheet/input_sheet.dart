@@ -43,34 +43,30 @@ class _InputSheetState extends State<InputSheet>
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<InputModel>(context);
-    return Material(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
       child: Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTitleTextField(),
-              if (model.isDetailsShown) _buildDetailsTextField(context),
-              if (model.task.due != null) _buildDueButton(context),
-              IconTheme(
-                data: Theme.of(context).accentIconTheme,
-                child: Row(
-                  children: [
-                    _buildDetailButton(context),
-                    _buildDueDateButton(context),
-                    Spacer(),
-                    _buildSaveButton()
-                  ],
-                ),
-              )
-            ],
-          ),
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTitleTextField(),
+            if (model.isDetailsShown)
+              Flexible(child: _buildDetailsTextField(context)),
+            if (model.task.due != null) _buildDueButton(context),
+            IconTheme(
+              data: Theme.of(context).accentIconTheme,
+              child: Row(
+                children: [
+                  _buildDetailButton(context),
+                  _buildDueDateButton(context),
+                  Spacer(),
+                  _buildSaveButton()
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -86,8 +82,6 @@ class _InputSheetState extends State<InputSheet>
           hintText: 'New task',
           border: InputBorder.none,
         ),
-        minLines: 1,
-        maxLines: 30,
       ),
     );
   }
@@ -117,6 +111,8 @@ class _InputSheetState extends State<InputSheet>
           border: InputBorder.none,
         ),
         style: Theme.of(context).textTheme.caption,
+        minLines: 1,
+        maxLines: null,
       ),
     );
   }

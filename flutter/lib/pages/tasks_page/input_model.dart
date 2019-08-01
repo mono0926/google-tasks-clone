@@ -7,11 +7,9 @@ class InputModel extends ChangeNotifier {
   final TasksHolder holder;
 
   var _task = const Task.empty();
-  var _isInputSheetShown = false;
   var _isDetailsShown = false;
 
   Task get task => _task;
-  bool get isInputSheetShown => _isInputSheetShown;
   bool get isDetailsShown => _isDetailsShown;
 
   void showDetails() {
