@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -8,9 +9,9 @@ import 'tasks_model.dart';
 class TasksMainPage extends StatelessWidget {
   const TasksMainPage._({Key key}) : super(key: key);
 
-  static Widget withDependencies() {
-    return ChangeNotifierProvider(
-      builder: (context) => TasksModel(),
+  static Widget withDependencies(BuildContext context) {
+    return ChangeNotifierProxyProvider<TasksHolder, TasksModel>(
+      builder: (context, holder, model) => model ?? TasksModel(holder: holder),
       child: const TasksMainPage._(),
     );
   }
@@ -107,7 +108,7 @@ class _Body extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(task.title),
-                              if (task.details != null) ...[
+                              if ((task.details ?? '').isNotEmpty) ...[
                                 const SizedBox(height: 2),
                                 Text(
                                   task.details,
@@ -132,14 +133,6 @@ class _Body extends StatelessWidget {
           )
         ],
       ),
-    );
-
-    return ListView.separated(
-      itemCount: tasks.length,
-      itemBuilder: (context, index) {
-        return ListTile();
-      },
-      separatorBuilder: (context, index) => Divider(),
     );
   }
 }

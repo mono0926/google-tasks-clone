@@ -19,9 +19,18 @@ class _InputSheetState extends State<InputSheet>
     with RouteAware, RouteObserverMixin {
   final _titleFocusNode = FocusNode();
   final _detailsFocusNode = FocusNode();
+  final _titleController = TextEditingController();
+  final _detailsController = TextEditingController();
   FocusNode _lastFocusNode;
 
   InputModel get _model => Provider.of<InputModel>(context, listen: false);
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _detailsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +72,7 @@ class _InputSheetState extends State<InputSheet>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
+        controller: _titleController,
         focusNode: _titleFocusNode,
         decoration: InputDecoration(
           hintText: 'New task',
@@ -92,6 +102,7 @@ class _InputSheetState extends State<InputSheet>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
+        controller: _detailsController,
         focusNode: _detailsFocusNode,
         decoration: InputDecoration(
           hintText: 'Add details',
@@ -140,7 +151,15 @@ class _InputSheetState extends State<InputSheet>
       textTheme: ButtonTextTheme.accent,
       // TODO(mono): localize
       child: const Text('Save'),
-      onPressed: () {},
+      onPressed: () {
+        _model
+          ..task = _model.task.copyWith(
+            title: _titleController.text,
+            details: _detailsController.text,
+          )
+          ..save()
+          ..toggleInputSheet(shown: false);
+      },
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/pages/tasks_page/input_sheet/input_sheet.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,8 @@ class TasksPage extends StatefulWidget {
   const TasksPage._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProvider(
-      builder: (context) => InputModel(),
+    return ChangeNotifierProxyProvider<TasksHolder, InputModel>(
+      builder: (context, holder, model) => model ?? InputModel(holder: holder),
       child: const TasksPage._(),
     );
   }
@@ -62,7 +63,7 @@ class _TasksPageState extends State<TasksPage>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TasksMainPage.withDependencies(),
+        TasksMainPage.withDependencies(context),
         _buildOverlay(),
         AnimatedBuilder(
           animation: _modalOffsetAnimation,
