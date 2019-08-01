@@ -11,6 +11,7 @@ ThemeData buildTheme() {
     primaryColorBrightness: Brightness.light,
     accentColor: accentColor,
     scaffoldBackgroundColor: backgroundColor,
+    dividerColor: Colors.black26,
     colorScheme: base.colorScheme.copyWith(
       secondary: backgroundColor,
 //      onSecondary: labelColor,

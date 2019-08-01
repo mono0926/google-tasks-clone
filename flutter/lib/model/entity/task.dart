@@ -6,15 +6,13 @@ import 'entity.dart';
 class Task {
   const Task({
     @required this.title,
-    @required this.details,
-    @required this.due,
+    this.details,
+    this.due,
   });
 
   const Task.empty()
       : this(
           title: null,
-          details: null,
-          due: null,
         );
 
   final String title;

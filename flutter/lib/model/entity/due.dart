@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class Due {
   const Due(
     this.dateTime, {
-    @required this.includeTime,
+    this.includeTime = false,
   });
   final DateTime dateTime;
   final bool includeTime;

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_tasks/model/model.dart';
 import 'package:provider/provider.dart';
 
-import '../model.dart';
+import '../input_model.dart';
 
 class DueDateTimeDialog extends StatefulWidget {
   const DueDateTimeDialog._({Key key}) : super(key: key);
 
-  static Widget withDependencies({@required Model model}) {
-    return ChangeNotifierProvider<Model>.value(
+  static Widget withDependencies({@required InputModel model}) {
+    return ChangeNotifierProvider<InputModel>.value(
       value: model,
       child: const DueDateTimeDialog._(),
     );
@@ -20,7 +20,7 @@ class DueDateTimeDialog extends StatefulWidget {
 
 class _DueDateTimeDialogState extends State<DueDateTimeDialog> {
   DateTime _date;
-  Model get _model => Provider.of<Model>(context, listen: false);
+  InputModel get _model => Provider.of<InputModel>(context, listen: false);
   Task get _task => _model.task;
 
   @override

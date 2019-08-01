@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'model.dart';
+import 'input_model.dart';
+import 'tasks_model.dart';
 
 class TasksMainPage extends StatelessWidget {
-  const TasksMainPage({Key key}) : super(key: key);
+  const TasksMainPage._({Key key}) : super(key: key);
+
+  static Widget withDependencies() {
+    return ChangeNotifierProvider(
+      builder: (context) => TasksModel(),
+      child: const TasksMainPage._(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // TODO(mono): 本物はAppBarではなくSliver使うと良さそう
-      appBar: AppBar(
-        title: const Text('My Tasks'),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<Model>(
+          Provider.of<InputModel>(
             context,
             listen: false,
           ).toggleInputSheet(shown: true);
@@ -49,6 +54,86 @@ class TasksMainPage extends StatelessWidget {
           ),
         ),
       ),
+      body: const _Body(),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<TasksModel>(context);
+    final tasks = model.tasks;
+
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 48,
+                vertical: 16,
+              ),
+              child: Text(
+                'My Tasks',
+                style: Theme.of(context).textTheme.headline,
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final task = tasks[index];
+                return Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                    color: Theme.of(context).dividerColor,
+                    width: 1 / MediaQuery.of(context).devicePixelRatio,
+                  ))),
+                  child: InkWell(
+                    onTap: () {},
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.radio_button_unchecked),
+                          onPressed: () {},
+//                      iconSize: 24,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Column(
+                            children: <Widget>[
+                              Text(task.title),
+                              if (task.details != null) ...[
+                                SizedBox(height: 2),
+                                Text(
+                                  task.details,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              ]
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              childCount: tasks.length,
+            ),
+          )
+        ],
+      ),
+    );
+
+    return ListView.separated(
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        return ListTile();
+      },
+      separatorBuilder: (context, index) => Divider(),
     );
   }
 }

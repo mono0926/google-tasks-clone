@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 
-import '../model.dart';
+import '../input_model.dart';
 import 'due_date_time_dialog.dart';
 
 const _elementPadding = EdgeInsets.all(16);
@@ -21,11 +21,11 @@ class _InputSheetState extends State<InputSheet>
   final _detailsFocusNode = FocusNode();
   FocusNode _lastFocusNode;
 
-  Model get _model => Provider.of<Model>(context, listen: false);
+  InputModel get _model => Provider.of<InputModel>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<InputModel>(context);
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -75,7 +75,7 @@ class _InputSheetState extends State<InputSheet>
   }
 
   Widget _buildDueLabel(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<InputModel>(context);
     final due = model.task.due;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -89,7 +89,7 @@ class _InputSheetState extends State<InputSheet>
             Radius.circular(10),
           ),
         ),
-        onPressed: () {},
+        onPressed: _showDueDateTimeDialog,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -134,7 +134,7 @@ class _InputSheetState extends State<InputSheet>
   }
 
   Widget _buildDetailButton(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<InputModel>(context);
     return IconButton(
       icon: Icon(Icons.format_align_left),
       padding: _elementPadding,
@@ -153,14 +153,16 @@ class _InputSheetState extends State<InputSheet>
     return IconButton(
       icon: Icon(Icons.calendar_today),
       padding: _elementPadding,
-      onPressed: () {
-        showDialog<void>(
-          context: context,
-          builder: (context) => DueDateTimeDialog.withDependencies(
-            model: _model,
-          ),
-        );
-      },
+      onPressed: _showDueDateTimeDialog,
+    );
+  }
+
+  void _showDueDateTimeDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => DueDateTimeDialog.withDependencies(
+        model: _model,
+      ),
     );
   }
 

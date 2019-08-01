@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
 
-class Model extends ChangeNotifier {
+class InputModel extends ChangeNotifier {
   var _task = const Task.empty();
   var _isInputSheetShown = false;
   var _isDetailsShown = false;

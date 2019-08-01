@@ -3,7 +3,7 @@ import 'package:google_tasks/pages/tasks_page/input_sheet/input_sheet.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 
-import 'model.dart';
+import 'input_model.dart';
 import 'tasks_main_page.dart';
 
 class TasksPage extends StatefulWidget {
@@ -11,7 +11,7 @@ class TasksPage extends StatefulWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProvider(
-      builder: (context) => Model(),
+      builder: (context) => InputModel(),
       child: const TasksPage._(),
     );
   }
@@ -26,7 +26,7 @@ class _TasksPageState extends State<TasksPage>
   Animation<double> _fadeAnimation;
   Animation<double> _modalOffsetAnimation;
 
-  Model get _model => Provider.of<Model>(context, listen: false);
+  InputModel get _model => Provider.of<InputModel>(context, listen: false);
 
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _TasksPageState extends State<TasksPage>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const TasksMainPage(),
+        TasksMainPage.withDependencies(),
         _buildOverlay(),
         AnimatedBuilder(
           animation: _modalOffsetAnimation,
