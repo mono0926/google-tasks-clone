@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "528887329462",
+    "firebase_url": "https://gtasks-dev.firebaseio.com",
+    "project_id": "gtasks-dev",
+    "storage_bucket": "gtasks-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528887329462:android:a05769a60ff717bd",
+        "android_client_info": {
+          "package_name": "com.mono0926.gtasks.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528887329462-lesrk3vrmdg5um5lke0faekkhv79l2gb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mono0926.gtasks.dev",
+            "certificate_hash": "9dd8ebf462b514a666fc15eb571ca66b3b9ab408"
+          }
+        },
+        {
+          "client_id": "528887329462-ns4npqdh9bpnma2t5b3t25vu2jp0bdlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Sc2pX2AL4xGJaDKqpRgJ6nH9ax8cGs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528887329462-ns4npqdh9bpnma2t5b3t25vu2jp0bdlt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "528887329462-qet45ifecgpo6kgulhqcoqd1gsg0kqpo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mono0926.gtasks.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

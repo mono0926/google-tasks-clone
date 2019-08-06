@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>528887329462-qet45ifecgpo6kgulhqcoqd1gsg0kqpo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.528887329462-qet45ifecgpo6kgulhqcoqd1gsg0kqpo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCeX-TN2alhVMuZVMAANxr1v651RsXoPvg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>528887329462</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mono0926.gtasks.dev</string>
+	<key>PROJECT_ID</key>
+	<string>gtasks-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gtasks-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:528887329462:ios:a05769a60ff717bd</string>
+	<key>DATABASE_URL</key>
+	<string>https://gtasks-dev.firebaseio.com</string>
+</dict>
+</plist>
