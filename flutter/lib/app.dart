@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mono_kit/mono_kit.dart';
+import 'package:route_observer_mixin/route_observer_mixin.dart';
 
 import 'pages/tasks_page/tasks_page.dart';
 import 'theme.dart';
