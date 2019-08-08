@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6",
+    "mocha": "^6.2.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
