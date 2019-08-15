@@ -13,7 +13,7 @@ class InputSheet extends StatefulWidget {
   const InputSheet._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksHolder, InputModel>(
+    return ChangeNotifierProxyProvider<TasksService, InputModel>(
       builder: (context, holder, model) => model ?? InputModel(holder: holder),
       child: const InputSheet._(),
     );

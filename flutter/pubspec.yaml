@@ -20,8 +20,11 @@ dependencies:
   route_observer_mixin: any
   rxdart: any
   simple_logger: any
+  undraw: any
+  google_sign_in: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  intl_translation: any
 flutter:
   uses-material-design: true

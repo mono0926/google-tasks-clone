@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/model.dart';
+import 'package:google_tasks/model/service/service.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'input_sheet/input_sheet.dart';
+import 'setting_sheet/setting_sheet.dart';
 import 'tasks_model.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage._({Key key}) : super(key: key);
 
+  static const routeName = '/Tasks';
+
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksHolder, TasksModel>(
-      builder: (context, holder, model) => model ?? TasksModel(holder: holder),
+    return ChangeNotifierProxyProvider<TasksService, TasksModel>(
+      builder: (context, holder, model) =>
+          model ?? TasksModel(observer: holder),
       child: const TasksPage._(),
     );
   }
@@ -49,7 +54,12 @@ class TasksPage extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.menu),
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (context) => SettingSheet.withDependencies(),
+                  );
+                },
               ),
               IconButton(
                 icon: Icon(Icons.more_horiz),
@@ -69,7 +79,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<TasksModel>(context);
-    final tasks = model.tasks;
+    final docs = model.tasks;
 
     return SafeArea(
       child: CustomScrollView(
@@ -89,7 +99,8 @@ class _Body extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final task = tasks[index];
+                final doc = docs[index];
+                final task = doc.entity;
                 return Container(
                   decoration: BoxDecoration(
                       border: Border(
@@ -131,7 +142,7 @@ class _Body extends StatelessWidget {
                   ),
                 );
               },
-              childCount: tasks.length,
+              childCount: docs.length,
             ),
           )
         ],

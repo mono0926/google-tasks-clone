@@ -1,2 +1,2 @@
 export 'entity/entity.dart';
-export 'tasks_holder.dart';
+export 'service/tasks_service.dart';

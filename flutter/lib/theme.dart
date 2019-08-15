@@ -12,6 +12,7 @@ ThemeData buildTheme() {
     accentColor: accentColor,
     scaffoldBackgroundColor: backgroundColor,
     dividerColor: Colors.black26,
+    buttonColor: accentColor,
     colorScheme: base.colorScheme.copyWith(
       secondary: backgroundColor,
 //      onSecondary: labelColor,
@@ -38,6 +39,7 @@ ThemeData buildTheme() {
       ),
     ),
     buttonTheme: base.buttonTheme.copyWith(
+      buttonColor: accentColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),

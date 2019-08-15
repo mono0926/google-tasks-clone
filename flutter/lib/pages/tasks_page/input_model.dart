@@ -4,7 +4,7 @@ import 'package:google_tasks/model/model.dart';
 class InputModel extends ChangeNotifier {
   InputModel({@required this.holder});
 
-  final TasksHolder holder;
+  final TasksService holder;
 
   var _task = const Task.empty();
   var _isDetailsShown = false;

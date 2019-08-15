@@ -1,20 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
+import 'package:google_tasks/util/util.dart';
 
 class TasksModel extends ChangeNotifier {
-  TasksModel({@required this.holder}) {
-    holder.tasks.listen((tasks) {
-      // とりあえず後に追加されたものから先頭に
-      _tasks = tasks.reversed.toList();
-      notifyListeners();
-    });
+  TasksModel({@required this.observer}) {
+    observer.docs().listen(
+      (tasks) {
+        _tasks = tasks;
+        notifyListeners();
+      },
+      onError: logger.severe,
+    );
   }
-  final TasksHolder holder;
-  var _tasks = <Task>[];
+  final TasksService observer;
+  var _tasks = <TaskDoc>[];
 
-  List<Task> get tasks => List.unmodifiable(_tasks);
+  List<TaskDoc> get tasks => List<TaskDoc>.unmodifiable(_tasks);
 
   void add(Task task) {
-    _tasks.add(task);
+//    _tasks.add(task);
   }
 }
