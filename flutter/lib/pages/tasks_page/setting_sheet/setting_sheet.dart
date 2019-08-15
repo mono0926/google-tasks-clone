@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'model.dart';
 
-class SettingSheet extends StatefulWidget {
+class SettingSheet extends StatelessWidget {
   const SettingSheet._({
     Key key,
   }) : super(key: key);
@@ -20,24 +20,6 @@ class SettingSheet extends StatefulWidget {
           ),
       child: const SettingSheet._(),
     );
-  }
-
-  @override
-  _SettingSheetState createState() => _SettingSheetState();
-}
-
-class _SettingSheetState extends State<SettingSheet> {
-  Model get _model => Provider.of<Model>(context, listen: false);
-
-  @override
-  void initState() {
-    super.initState();
-
-    _model.addListener(() {
-      if (_model.status == Status.signedOut) {
-        Navigator.of(context).popUntil((r) => r.isFirst);
-      }
-    });
   }
 
   @override

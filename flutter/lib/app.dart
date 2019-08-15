@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_tasks/pages/root_page/root_page.dart';
 import 'package:google_tasks/pages/welcome_page/welcome_page.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
 
 import 'l10n/l10n.dart';
-import 'pages/initial_page/initial_page.dart';
 import 'router.dart';
 import 'theme.dart';
 
@@ -40,7 +40,7 @@ enum RunCondition {
 
 Widget _buildHome(BuildContext context) {
   if (condition == null) {
-    return InitialPage.withDependencies();
+    return RootPage.withDependencies();
   }
   switch (condition) {
     case RunCondition.welcome:

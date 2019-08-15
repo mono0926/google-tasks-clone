@@ -6,31 +6,34 @@ import 'package:google_tasks/model/entity/entity.dart';
 import 'package:google_tasks/model/service/authenticator.dart';
 import 'package:google_tasks/model/service/user_observer.dart';
 import 'package:meta/meta.dart';
+import 'package:mono_kit/mono_kit.dart';
 
-class Account extends ChangeNotifier {
+class Account extends ChangeNotifier with SubscriptionHolderMixin {
   Account({
     @required this.authenticator,
     @required this.userObserver,
   }) {
-    _auth.onAuthStateChanged.listen((firUser) {
-      final uid = firUser?.uid;
-      final uidChanged = _firUser?.uid != uid;
-      _firUser = firUser;
-      if (uidChanged) {
-        if (firUser == null) {
-          _userDoc = null;
-        } else {
-          _userObserveSubscription?.cancel();
-          _userObserveSubscription = userObserver.doc(uid).listen((userDoc) {
-            _userDoc = userDoc;
-            notifyListeners();
-            if (userDoc == null) {
-              UsersRef.ref().docRef(uid).setJson(<String, dynamic>{});
-            }
-          });
+    subscriptionHolder.add(
+      _auth.onAuthStateChanged.listen((firUser) {
+        final uid = firUser?.uid;
+        final uidChanged = _firUser?.uid != uid;
+        _firUser = firUser;
+        if (uidChanged) {
+          if (firUser == null) {
+            _userDoc = null;
+          } else {
+            _userObserveSubscription?.cancel();
+            _userObserveSubscription = userObserver.doc(uid).listen((userDoc) {
+              _userDoc = userDoc;
+              notifyListeners();
+              if (userDoc == null) {
+                UsersRef.ref().docRef(uid).setJson(<String, dynamic>{});
+              }
+            });
+          }
         }
-      }
-    });
+      }),
+    );
   }
 
   final Authenticator authenticator;
