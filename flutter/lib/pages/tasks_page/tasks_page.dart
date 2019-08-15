@@ -15,8 +15,8 @@ class TasksPage extends StatelessWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProxyProvider<TasksService, TasksModel>(
-      builder: (context, holder, model) =>
-          model ?? TasksModel(observer: holder),
+      builder: (context, service, model) =>
+          model ?? TasksModel(service: service),
       child: const TasksPage._(),
     );
   }

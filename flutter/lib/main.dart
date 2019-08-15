@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/notifier/account.dart';
@@ -22,9 +23,16 @@ void main() {
         // TODO(mono): ライブラリを直して警告解消
         RouteObserverProvider(),
         Provider.value(value: Authenticator()),
-        ProxyProvider<Authenticator, TasksService>(
-          builder: (context, authenticator, previous) =>
-              previous ?? TasksService(authenticator: authenticator),
+        StreamProvider<FirebaseUser>(
+          builder: (context) =>
+              Provider.of<Authenticator>(context, listen: false)
+                  .onAuthStateChanged
+                  .distinct((a, b) => a?.uid == b?.uid),
+        ),
+        ProxyProvider<FirebaseUser, TasksService>(
+          initialBuilder: (context) => TasksService(),
+          builder: (context, firUser, tasksService) =>
+              tasksService..updateFirebaseUser(firUser),
         ),
         Provider.value(value: UserObserver()),
         ChangeNotifierProxyProvider2<Authenticator, UserObserver, Account>(

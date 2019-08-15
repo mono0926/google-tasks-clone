@@ -14,7 +14,8 @@ class InputSheet extends StatefulWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProxyProvider<TasksService, InputModel>(
-      builder: (context, holder, model) => model ?? InputModel(holder: holder),
+      builder: (context, service, model) =>
+          model ?? InputModel(service: service),
       child: const InputSheet._(),
     );
   }

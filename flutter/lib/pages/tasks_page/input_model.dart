@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
 
 class InputModel extends ChangeNotifier {
-  InputModel({@required this.holder});
+  InputModel({@required this.service});
 
-  final TasksService holder;
+  final TasksService service;
 
   var _task = const Task.empty();
   var _isDetailsShown = false;
@@ -23,6 +23,6 @@ class InputModel extends ChangeNotifier {
   }
 
   void save() {
-    holder.add(task);
+    service.add(task);
   }
 }

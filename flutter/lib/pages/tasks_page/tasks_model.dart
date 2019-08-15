@@ -4,9 +4,9 @@ import 'package:google_tasks/util/util.dart';
 import 'package:mono_kit/mono_kit.dart';
 
 class TasksModel extends ChangeNotifier with SubscriptionHolderMixin {
-  TasksModel({@required this.observer}) {
+  TasksModel({@required this.service}) {
     subscriptionHolder.add(
-      observer.docs().listen(
+      service.docs().listen(
         (tasks) {
           _tasks = tasks;
           notifyListeners();
@@ -15,7 +15,7 @@ class TasksModel extends ChangeNotifier with SubscriptionHolderMixin {
       ),
     );
   }
-  final TasksService observer;
+  final TasksService service;
   var _tasks = <TaskDoc>[];
 
   List<TaskDoc> get tasks => List<TaskDoc>.unmodifiable(_tasks);
