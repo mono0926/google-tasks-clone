@@ -1,0 +1,9 @@
+{
+  "@@locale": "ja",
+  "@@last_modified": "2019-08-15T10:43:43.964495",
+  "welcomeTitle": "Tasksアプリへようこそ",
+  "@welcomeTitle": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

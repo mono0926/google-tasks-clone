@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2019-08-15T10:45:26.408999",
+  "welcomeTitle": "Welcome to Tasks",
+  "@welcomeTitle": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
