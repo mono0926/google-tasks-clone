@@ -11,7 +11,9 @@ class InputSheet extends StatefulWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProvider<Model>(
-      builder: (context) => Model(service: Provider.of(context, listen: false)),
+      builder: (context) => Model(
+        service: Provider.of(context, listen: false),
+      ),
       child: const InputSheet._(),
     );
   }
@@ -22,20 +24,9 @@ class InputSheet extends StatefulWidget {
 
 class _InputSheetState extends State<InputSheet>
     with RouteAware, RouteObserverMixin {
-  final _titleFocusNode = FocusNode();
-  final _detailsFocusNode = FocusNode();
-  final _titleController = TextEditingController();
-  final _detailsController = TextEditingController();
   FocusNode _lastFocusNode;
 
   Model get _model => Provider.of<Model>(context, listen: false);
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _detailsController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +45,8 @@ class _InputSheetState extends State<InputSheet>
                 children: [
                   _buildTitleTextField(),
                   if (model.isDetailsShown)
-                    Flexible(child: _buildDetailsTextField(context)),
-                  if (model.task.due != null) _buildDueButton(context),
+                    Flexible(child: _buildDetailsTextField()),
+                  if (model.task.due != null) _buildDueButton(),
                   IconTheme(
                     data: Theme.of(context).accentIconTheme,
                     child: Row(
@@ -77,11 +68,12 @@ class _InputSheetState extends State<InputSheet>
   }
 
   Widget _buildTitleTextField() {
+    final model = Provider.of<Model>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
-        controller: _titleController,
-        focusNode: _titleFocusNode,
+        controller: model.titleController,
+        focusNode: model.titleFocusNode,
         decoration: InputDecoration(
           hintText: 'New task',
           border: InputBorder.none,
@@ -90,7 +82,7 @@ class _InputSheetState extends State<InputSheet>
     );
   }
 
-  Widget _buildDueButton(BuildContext context) {
+  Widget _buildDueButton() {
     final model = Provider.of<Model>(context);
     final due = model.task.due;
 
@@ -104,12 +96,13 @@ class _InputSheetState extends State<InputSheet>
     );
   }
 
-  Widget _buildDetailsTextField(BuildContext context) {
+  Widget _buildDetailsTextField() {
+    final model = Provider.of<Model>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
-        controller: _detailsController,
-        focusNode: _detailsFocusNode,
+        controller: model.detailsController,
+        focusNode: model.detailsFocusNode,
         decoration: InputDecoration(
           hintText: 'Add details',
           border: InputBorder.none,
@@ -131,7 +124,7 @@ class _InputSheetState extends State<InputSheet>
           : () {
               model.showDetails();
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                FocusScope.of(context).requestFocus(_detailsFocusNode);
+                FocusScope.of(context).requestFocus(model.detailsFocusNode);
               });
             },
     );
@@ -162,8 +155,8 @@ class _InputSheetState extends State<InputSheet>
       onPressed: () {
         _model
           ..task = _model.task.copyWith(
-            title: _titleController.text,
-            details: _detailsController.text,
+            title: _model.titleController.text,
+            details: _model.detailsController.text,
           )
           ..save();
         Navigator.of(context).pop();
@@ -173,7 +166,7 @@ class _InputSheetState extends State<InputSheet>
 
   @override
   void didPush() {
-    FocusScope.of(context).requestFocus(_titleFocusNode);
+    FocusScope.of(context).requestFocus(_model.titleFocusNode);
   }
 
   @override
@@ -185,7 +178,7 @@ class _InputSheetState extends State<InputSheet>
 
   @override
   void didPushNext() {
-    for (final node in [_titleFocusNode, _detailsFocusNode]) {
+    for (final node in [_model.titleFocusNode, _model.detailsFocusNode]) {
       if (node.hasFocus) {
         _lastFocusNode = node;
         break;

@@ -1,10 +1,17 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_tasks/model/model.dart';
 
 class Model extends ChangeNotifier {
-  Model({@required this.service});
+  Model({
+    @required this.service,
+  });
 
   final TasksService service;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController detailsController = TextEditingController();
+  final FocusNode titleFocusNode = FocusNode();
+  final FocusNode detailsFocusNode = FocusNode();
 
   var _task = const Task.empty();
   var _isDetailsShown = false;
@@ -24,5 +31,13 @@ class Model extends ChangeNotifier {
 
   void save() {
     service.add(task);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    detailsController.dispose();
+
+    super.dispose();
   }
 }
