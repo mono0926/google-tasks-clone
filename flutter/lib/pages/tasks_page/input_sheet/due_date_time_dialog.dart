@@ -4,29 +4,24 @@ import 'package:provider/provider.dart';
 
 import 'model.dart';
 
-class DueDateTimeDialog extends StatefulWidget {
+class _DateModel extends ValueNotifier<DateTime> {
+  _DateModel(DateTime value) : super(value);
+}
+
+class DueDateTimeDialog extends StatelessWidget {
   const DueDateTimeDialog._({Key key}) : super(key: key);
 
   static Widget withDependencies({@required Model model}) {
-    return ChangeNotifierProvider<Model>.value(
-      value: model,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Model>.value(value: model),
+        ChangeNotifierProvider<_DateModel>(builder: (context) {
+          final model = Provider.of<Model>(context, listen: false);
+          return _DateModel(model.task.due?.dateTime ?? DateTime.now());
+        }),
+      ],
       child: const DueDateTimeDialog._(),
     );
-  }
-
-  @override
-  _DueDateTimeDialogState createState() => _DueDateTimeDialogState();
-}
-
-class _DueDateTimeDialogState extends State<DueDateTimeDialog> {
-  DateTime _date;
-  Model get _model => Provider.of<Model>(context, listen: false);
-  Task get _task => _model.task;
-
-  @override
-  void initState() {
-    super.initState();
-    _date = _task.due?.dateTime ?? DateTime.now();
   }
 
   @override
@@ -41,31 +36,60 @@ class _DueDateTimeDialogState extends State<DueDateTimeDialog> {
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 16),
-                  _buildPicker(),
-                  _buildStartTimeTile(context),
-                  _buildRepeatTile(),
+                children: const [
+                  SizedBox(height: 16),
+                  _Picker(),
+                  _StartTimeTile(),
+                  _RepeatTile(),
                 ],
               ),
             ),
           ),
-          _buildButtons(context)
+          ButtonTheme.bar(
+            child: const ButtonBar(
+              children: [
+                _CancelButton(),
+                _DoneButton(),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildPicker() {
-    return MonthPicker(
-      selectedDate: _date,
-      onChanged: (date) => setState(() => _date = date),
-      firstDate: DateTime.now().subtract(Duration(days: 365)),
-      lastDate: DateTime.now().add(Duration(days: 3650)),
+class _RepeatTile extends StatelessWidget {
+  const _RepeatTile({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.repeat),
+      title: const Text('Does not repeat'),
+      dense: true,
+      trailing: Icon(Icons.chevron_right),
+      onTap: () {},
     );
   }
+}
 
-  Widget _buildStartTimeTile(BuildContext context) {
+class _CancelButton extends StatelessWidget {
+  const _CancelButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+}
+
+class _StartTimeTile extends StatelessWidget {
+  const _StartTimeTile({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.access_time),
       title: const Text('Set start time'),
@@ -78,44 +102,38 @@ class _DueDateTimeDialogState extends State<DueDateTimeDialog> {
       },
     );
   }
+}
 
-  Widget _buildRepeatTile() {
-    return ListTile(
-      leading: Icon(Icons.repeat),
-      title: const Text('Does not repeat'),
-      dense: true,
-      trailing: Icon(Icons.chevron_right),
-      onTap: () {},
-    );
-  }
-
-  Widget _buildButtons(BuildContext context) {
-    return ButtonTheme.bar(
-      child: ButtonBar(
-        children: <Widget>[_buildCancelButton(context), _buildDoneButton()],
-      ),
-    );
-  }
-
-  Widget _buildCancelButton(BuildContext context) {
-    return FlatButton(
-      child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-  }
-
-  Widget _buildDoneButton() {
+class _DoneButton extends StatelessWidget {
+  const _DoneButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<Model>(context, listen: false);
+    final task = model.task;
+    final dateModel = Provider.of<_DateModel>(context, listen: false);
+    final due = dateModel.value;
     return FlatButton(
       child: const Text('DONE'),
       onPressed: () {
-        _model.task = _task.copyWith(
-          due: (_task.due ?? const Due(null, includeTime: false))
-              .copyWith(_date),
+        model.task = task.copyWith(
+          due: (task.due ?? const Due(null, includeTime: false)).copyWith(due),
         );
         Navigator.of(context).pop();
       },
+    );
+  }
+}
+
+class _Picker extends StatelessWidget {
+  const _Picker({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<_DateModel>(context);
+    return MonthPicker(
+      selectedDate: model.value,
+      onChanged: (date) => model.value = date,
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
+      lastDate: DateTime.now().add(Duration(days: 3650)),
     );
   }
 }
