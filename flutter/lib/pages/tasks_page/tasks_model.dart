@@ -19,8 +19,4 @@ class TasksModel extends ChangeNotifier with SubscriptionHolderMixin {
   var _tasks = <TaskDoc>[];
 
   List<TaskDoc> get tasks => List<TaskDoc>.unmodifiable(_tasks);
-
-  void add(Task task) {
-//    _tasks.add(task);
-  }
 }
