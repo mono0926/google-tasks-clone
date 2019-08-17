@@ -23,6 +23,7 @@ dependencies:
   undraw: any
   google_sign_in: any
   cloud_functions: any
+  cached_network_image: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
