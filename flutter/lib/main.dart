@@ -20,7 +20,6 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        // TODO(mono): ライブラリを直して警告解消
         RouteObserverProvider(),
         Provider.value(value: Authenticator()),
         StreamProvider<FirebaseUser>(
