@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/notifier/notifier.dart';
 import 'package:google_tasks/model/service/service.dart';
@@ -41,10 +42,9 @@ class SettingSheet extends StatelessWidget {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: Image.network(
+                    backgroundImage: CachedNetworkImageProvider(
                       firUser.photoUrl,
-                      fit: BoxFit.fill,
-                    ).image,
+                    ),
                     radius: 18,
                   ),
                   const SizedBox(width: 8),
