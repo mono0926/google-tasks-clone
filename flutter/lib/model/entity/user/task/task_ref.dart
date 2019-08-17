@@ -6,7 +6,7 @@ import 'task.dart';
 import 'task_doc.dart';
 
 class TaskRef extends DocumentRef<Task, TaskDoc> {
-  TaskRef({
+  const TaskRef({
     @required DocumentReference ref,
     @required DocumentDecoder<TaskDoc> decoder,
     @required EntityEncoder<Task> encoder,

@@ -4,18 +4,15 @@ import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
 
-import '../input_model.dart';
 import 'due_date_time_dialog.dart';
-
-const _elementPadding = EdgeInsets.all(16);
+import 'model.dart';
 
 class InputSheet extends StatefulWidget {
   const InputSheet._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksService, InputModel>(
-      builder: (context, service, model) =>
-          model ?? InputModel(service: service),
+    return ChangeNotifierProxyProvider<TasksService, Model>(
+      builder: (context, service, model) => model ?? Model(service: service),
       child: const InputSheet._(),
     );
   }
@@ -32,7 +29,7 @@ class _InputSheetState extends State<InputSheet>
   final _detailsController = TextEditingController();
   FocusNode _lastFocusNode;
 
-  InputModel get _model => Provider.of<InputModel>(context, listen: false);
+  Model get _model => Provider.of<Model>(context, listen: false);
 
   @override
   void dispose() {
@@ -43,7 +40,7 @@ class _InputSheetState extends State<InputSheet>
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<InputModel>(context);
+    final model = Provider.of<Model>(context);
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: LayoutBuilder(
@@ -95,7 +92,7 @@ class _InputSheetState extends State<InputSheet>
   }
 
   Widget _buildDueButton(BuildContext context) {
-    final model = Provider.of<InputModel>(context);
+    final model = Provider.of<Model>(context);
     final due = model.task.due;
 
     return Padding(
@@ -126,10 +123,10 @@ class _InputSheetState extends State<InputSheet>
   }
 
   Widget _buildDetailButton(BuildContext context) {
-    final model = Provider.of<InputModel>(context);
+    final model = Provider.of<Model>(context);
     return IconButton(
       icon: Icon(Icons.format_align_left),
-      padding: _elementPadding,
+      padding: const EdgeInsets.all(16),
       onPressed: model.isDetailsShown
           ? null
           : () {
@@ -144,7 +141,7 @@ class _InputSheetState extends State<InputSheet>
   Widget _buildDueDateButton(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.calendar_today),
-      padding: _elementPadding,
+      padding: const EdgeInsets.all(16),
       onPressed: _showDueDateTimeDialog,
     );
   }

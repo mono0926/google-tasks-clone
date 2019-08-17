@@ -5,6 +5,7 @@ abstract class Entity {
   const Entity();
 }
 
+@immutable
 // ignore: one_member_abstracts
 abstract class EntityEncoder<E extends Entity> {
   Map<String, dynamic> encode(E entity);

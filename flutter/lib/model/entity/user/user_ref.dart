@@ -7,7 +7,7 @@ import 'user.dart';
 import 'user_doc.dart';
 
 class UserRef extends DocumentRef<User, UserDoc> {
-  UserRef({
+  const UserRef({
     @required DocumentReference ref,
     @required DocumentDecoder<UserDoc> decoder,
     @required EntityEncoder<User> encoder,

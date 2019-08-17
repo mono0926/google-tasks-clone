@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/model/service/service.dart';
+import 'package:google_tasks/pages/tasks_page/task_tile/task_tile.dart';
+import 'package:google_tasks/util/util.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +13,7 @@ import 'tasks_model.dart';
 class TasksPage extends StatelessWidget {
   const TasksPage._({Key key}) : super(key: key);
 
-  static const routeName = '/Tasks';
+  static const routeName = 'Tasks';
 
   static Widget withDependencies() {
     return ChangeNotifierProxyProvider<TasksService, TasksModel>(
@@ -26,50 +28,57 @@ class TasksPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet<void>(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) =>
-                SafeArea(child: InputSheet.withDependencies()),
-          );
-        },
-        child: const GoogleAdd(),
+      floatingActionButton: _buildFab(context),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
+      body: const _Body(),
+    );
+  }
+
+  Widget _buildFab(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet<void>(
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => SafeArea(child: InputSheet.withDependencies()),
+        );
+      },
+      child: const GoogleAdd(),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            offset: Offset.zero,
+            blurRadius: 8,
+          )
+        ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              offset: Offset.zero,
-              blurRadius: 8,
-            )
+      child: BottomAppBar(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  builder: (context) => SettingSheet.withDependencies(),
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.more_horiz),
+              onPressed: () {},
+            ),
           ],
         ),
-        child: BottomAppBar(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (context) => SettingSheet.withDependencies(),
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.more_horiz),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
       ),
-      body: const _Body(),
     );
   }
 }
@@ -80,7 +89,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<TasksModel>(context);
     final docs = model.tasks;
-
+    logger.info('docs count: ${docs.length}');
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -100,47 +109,7 @@ class _Body extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final doc = docs[index];
-                final task = doc.entity;
-                return Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(
-                    color: Theme.of(context).dividerColor,
-                    width: 1 / MediaQuery.of(context).devicePixelRatio,
-                  ))),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.radio_button_unchecked),
-                          onPressed: () {},
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(task.title),
-                              if ((task.details ?? '').isNotEmpty) ...[
-                                const SizedBox(height: 2),
-                                Text(
-                                  task.details,
-                                  style: Theme.of(context).textTheme.caption,
-                                ),
-                              ],
-                              if (task.due != null)
-                                DueButton(
-                                  due: task.due,
-                                  onPressed: () {},
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return TaskTile.withDependencies(doc);
               },
               childCount: docs.length,
             ),

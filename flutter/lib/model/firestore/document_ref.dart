@@ -4,8 +4,9 @@ import 'package:meta/meta.dart';
 
 import 'firestore.dart';
 
+@immutable
 class DocumentRef<E extends Entity, D extends Document<E>> {
-  DocumentRef({
+  const DocumentRef({
     @required this.ref,
     @required this.decoder,
     @required this.encoder,

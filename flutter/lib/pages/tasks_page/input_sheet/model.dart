@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
 
-class InputModel extends ChangeNotifier {
-  InputModel({@required this.service});
+class Model extends ChangeNotifier {
+  Model({@required this.service});
 
   final TasksService service;
 

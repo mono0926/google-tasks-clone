@@ -10,7 +10,7 @@ import 'task_ref.dart';
 export 'task_ref.dart';
 
 class TasksRef extends CollectionRef<Task, TaskDoc> {
-  TasksRef._({
+  const TasksRef._({
     @required CollectionReference ref,
     @required DocumentDecoder<TaskDoc> decoder,
     @required EntityEncoder<Task> encoder,

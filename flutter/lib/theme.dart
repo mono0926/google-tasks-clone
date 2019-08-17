@@ -5,6 +5,7 @@ ThemeData buildTheme() {
   const accentColor = Color(0xFF3B72E2);
   const backgroundColor = Colors.white;
   const labelColor = Colors.black;
+  const iconColor = Color(0xFF666666);
   const fillColor = Color(0xFFF5F5F5);
   return base.copyWith(
 //    primaryColor: backgroundColor,
@@ -54,6 +55,9 @@ ThemeData buildTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: fillColor,
+    ),
+    primaryIconTheme: base.primaryIconTheme.copyWith(
+      color: iconColor,
     ),
   );
 }

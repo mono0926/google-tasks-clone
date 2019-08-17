@@ -7,7 +7,6 @@ export 'due.dart';
 export 'task_doc.dart';
 export 'tasks_ref.dart';
 
-@immutable
 class Task extends Entity {
   const Task({
     @required this.title,

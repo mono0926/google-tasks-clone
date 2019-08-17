@@ -9,7 +9,7 @@ import 'user_ref.dart';
 export 'user_ref.dart';
 
 class UsersRef extends CollectionRef<User, UserDoc> {
-  UsersRef._({
+  const UsersRef._({
     @required CollectionReference ref,
     @required DocumentDecoder<UserDoc> decoder,
     @required EntityEncoder<User> encoder,

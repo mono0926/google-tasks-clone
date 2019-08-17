@@ -4,7 +4,6 @@ import 'package:google_tasks/model/firestore/firestore.dart';
 export 'user_doc.dart';
 export 'users_ref.dart';
 
-@immutable
 class User extends Entity {
   const User({
     @required this.name,

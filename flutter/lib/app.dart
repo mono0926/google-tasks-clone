@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_tasks/pages/welcome_page/welcome_page.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
 

@@ -7,16 +7,22 @@ import 'package:mono_kit/mono_kit.dart';
 import 'pages/root_page/root_page.dart';
 import 'pages/tasks_page/tasks_navigator.dart';
 
+typedef WidgetPageBuilder = Widget Function(
+  BuildContext context,
+  RouteSettings settings,
+);
+
 // ignore: avoid_classes_with_only_static_members
 class Router {
   static const root = '/';
 
-  static final _routes = <String, WidgetBuilder>{
-    root: (context) => RootPage.withDependencies(),
+  static final _routes = <String, WidgetPageBuilder>{
+    root: (context, settings) => RootPage.withDependencies(),
   };
-  static final _fadeRoutes = <String, WidgetBuilder>{
-    WelcomePage.routeName: (context) => WelcomePage.withDependencies(),
-    TasksPage.routeName: (context) => const TasksNavigator(),
+  static final _fadeRoutes = <String, WidgetPageBuilder>{
+    WelcomePage.routeName: (context, settings) =>
+        WelcomePage.withDependencies(),
+    TasksPage.routeName: (context, settings) => const TasksNavigator(),
   };
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -24,14 +30,14 @@ class Router {
     var pageBuilder = _routes[settings.name];
     if (pageBuilder != null) {
       return MaterialPageRoute<void>(
-        builder: pageBuilder,
+        builder: (context) => pageBuilder(context, settings),
         settings: settings,
       );
     }
     pageBuilder = _fadeRoutes[settings.name];
     if (pageBuilder != null) {
       return FadePageRoute<void>(
-        builder: pageBuilder,
+        builder: (context) => pageBuilder(context, settings),
         settings: settings,
       );
     }

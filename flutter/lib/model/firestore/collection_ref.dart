@@ -5,8 +5,9 @@ import 'firestore.dart';
 
 typedef MakeQuery = Query Function(CollectionReference collectionRef);
 
+@immutable
 class CollectionRef<E extends Entity, D extends Document<E>> {
-  CollectionRef({
+  const CollectionRef({
     @required this.ref,
     @required this.decoder,
     @required this.encoder,
