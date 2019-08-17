@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:route_observer_mixin/route_observer_mixin.dart';
 
 import 'due_date_time_dialog.dart';
 import 'model.dart';
 
-class InputSheet extends StatefulWidget {
+class InputSheet extends StatelessWidget {
   const InputSheet._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
@@ -19,18 +18,7 @@ class InputSheet extends StatefulWidget {
   }
 
   @override
-  _InputSheetState createState() => _InputSheetState();
-}
-
-class _InputSheetState extends State<InputSheet>
-    with RouteAware, RouteObserverMixin {
-  FocusNode _lastFocusNode;
-
-  Model get _model => Provider.of<Model>(context, listen: false);
-
-  @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: LayoutBuilder(
@@ -43,18 +31,17 @@ class _InputSheetState extends State<InputSheet>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTitleTextField(),
-                  if (model.isDetailsShown)
-                    Flexible(child: _buildDetailsTextField()),
-                  if (model.task.due != null) _buildDueButton(),
+                  const _TitleTextField(),
+                  const Flexible(child: _DetailsTextField()),
+                  const _DueButton(),
                   IconTheme(
                     data: Theme.of(context).accentIconTheme,
                     child: Row(
-                      children: [
-                        _buildDetailButton(context),
-                        _buildDueDateButton(context),
+                      children: const [
+                        _DetailButton(),
+                        _DueDateButton(),
                         Spacer(),
-                        _buildSaveButton()
+                        _SaveButton(),
                       ],
                     ),
                   )
@@ -66,12 +53,29 @@ class _InputSheetState extends State<InputSheet>
       ),
     );
   }
+}
 
-  Widget _buildTitleTextField() {
+class _DueDateButton extends StatelessWidget {
+  const _DueDateButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.calendar_today),
+      padding: const EdgeInsets.all(16),
+      onPressed: () => _showDueDateTimeDialog(context),
+    );
+  }
+}
+
+class _TitleTextField extends StatelessWidget {
+  const _TitleTextField({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     final model = Provider.of<Model>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
+        autofocus: true,
         controller: model.titleController,
         focusNode: model.titleFocusNode,
         decoration: InputDecoration(
@@ -81,23 +85,16 @@ class _InputSheetState extends State<InputSheet>
       ),
     );
   }
+}
 
-  Widget _buildDueButton() {
+class _DetailsTextField extends StatelessWidget {
+  const _DetailsTextField({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    final due = model.task.due;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: DueButton(
-        due: due,
-        onPressed: _showDueDateTimeDialog,
-        onClosePressed: () => model.task = model.task.copyWith(clearDue: true),
-      ),
-    );
-  }
-
-  Widget _buildDetailsTextField() {
-    final model = Provider.of<Model>(context, listen: false);
+    if (!model.isDetailsShown) {
+      return const SizedBox();
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
@@ -113,8 +110,33 @@ class _InputSheetState extends State<InputSheet>
       ),
     );
   }
+}
 
-  Widget _buildDetailButton(BuildContext context) {
+class _DueButton extends StatelessWidget {
+  const _DueButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<Model>(context);
+    final due = model.task.due;
+
+    if (model.task.due == null) {
+      return const SizedBox();
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: DueButton(
+        due: due,
+        onPressed: () => _showDueDateTimeDialog(context),
+        onClosePressed: () => model.task = model.task.copyWith(clearDue: true),
+      ),
+    );
+  }
+}
+
+class _DetailButton extends StatelessWidget {
+  const _DetailButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     return IconButton(
       icon: Icon(Icons.format_align_left),
@@ -124,65 +146,42 @@ class _InputSheetState extends State<InputSheet>
           : () {
               model.showDetails();
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                FocusScope.of(context).requestFocus(model.detailsFocusNode);
+                model.focusToDetails(context);
               });
             },
     );
   }
+}
 
-  Widget _buildDueDateButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.calendar_today),
-      padding: const EdgeInsets.all(16),
-      onPressed: _showDueDateTimeDialog,
-    );
-  }
-
-  void _showDueDateTimeDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (context) => DueDateTimeDialog.withDependencies(
-        model: _model,
-      ),
-    );
-  }
-
-  Widget _buildSaveButton() {
+class _SaveButton extends StatelessWidget {
+  const _SaveButton({Key key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<Model>(context, listen: false);
     return FlatButton(
       textTheme: ButtonTextTheme.accent,
       // TODO(mono): localize
       child: const Text('Save'),
       onPressed: () {
-        _model
-          ..task = _model.task.copyWith(
-            title: _model.titleController.text,
-            details: _model.detailsController.text,
+        model
+          ..task = model.task.copyWith(
+            title: model.titleController.text,
+            details: model.detailsController.text,
           )
           ..save();
         Navigator.of(context).pop();
       },
     );
   }
+}
 
-  @override
-  void didPush() {
-    FocusScope.of(context).requestFocus(_model.titleFocusNode);
-  }
-
-  @override
-  void didPopNext() {
-    if (_lastFocusNode != null) {
-      FocusScope.of(context).requestFocus(_lastFocusNode);
-    }
-  }
-
-  @override
-  void didPushNext() {
-    for (final node in [_model.titleFocusNode, _model.detailsFocusNode]) {
-      if (node.hasFocus) {
-        _lastFocusNode = node;
-        break;
-      }
-    }
-  }
+void _showDueDateTimeDialog(BuildContext context) async {
+  final model = Provider.of<Model>(context, listen: false)..saveFocus();
+  await showDialog<void>(
+    context: context,
+    builder: (context) => DueDateTimeDialog.withDependencies(
+      model: model,
+    ),
+  );
+  model.focusToLastIfPossible(context);
 }

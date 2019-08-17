@@ -12,6 +12,7 @@ class Model extends ChangeNotifier {
   final TextEditingController detailsController = TextEditingController();
   final FocusNode titleFocusNode = FocusNode();
   final FocusNode detailsFocusNode = FocusNode();
+  FocusNode lastFocusNode;
 
   var _task = const Task.empty();
   var _isDetailsShown = false;
@@ -31,6 +32,36 @@ class Model extends ChangeNotifier {
 
   void save() {
     service.add(task);
+  }
+
+  void focusToTitle(BuildContext context) {
+    _focus(context, node: titleFocusNode);
+  }
+
+  void focusToDetails(BuildContext context) {
+    _focus(context, node: detailsFocusNode);
+  }
+
+  void focusToLastIfPossible(BuildContext context) {
+    if (lastFocusNode != null) {
+      _focus(context, node: lastFocusNode);
+    }
+  }
+
+  void saveFocus() {
+    for (final node in [titleFocusNode, detailsFocusNode]) {
+      if (node.hasFocus) {
+        lastFocusNode = node;
+        break;
+      }
+    }
+  }
+
+  void _focus(
+    BuildContext context, {
+    @required FocusNode node,
+  }) {
+    FocusScope.of(context).requestFocus(node);
   }
 
   @override
