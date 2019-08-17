@@ -1,8 +1,15 @@
-// import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+// import { api as _api } from './api'
+
+admin.initializeApp()
+
+// export const api = functions.https.onRequest(_api)
+
+export const xxx = functions.firestore
+  .document('users/{userId}')
+  .onCreate((snap, context) => {
+    console.log(snap)
+    console.log(context)
+  })
