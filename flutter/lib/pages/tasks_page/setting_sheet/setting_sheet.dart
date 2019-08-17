@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/notifier/notifier.dart';
-import 'package:google_tasks/model/service/service.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +12,10 @@ class SettingSheet extends StatelessWidget {
   }) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<Authenticator, Model>(
-      builder: (context, authenticator, previous) =>
-          previous ??
-          Model(
-            authenticator: authenticator,
-          ),
+    return ChangeNotifierProvider<Model>(
+      builder: (context) => Model(
+        authenticator: Provider.of(context, listen: false),
+      ),
       child: const SettingSheet._(),
     );
   }

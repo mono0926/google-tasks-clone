@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
@@ -11,8 +10,8 @@ class InputSheet extends StatefulWidget {
   const InputSheet._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksService, Model>(
-      builder: (context, service, model) => model ?? Model(service: service),
+    return ChangeNotifierProvider<Model>(
+      builder: (context) => Model(service: Provider.of(context, listen: false)),
       child: const InputSheet._(),
     );
   }

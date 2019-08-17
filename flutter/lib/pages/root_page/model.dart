@@ -6,10 +6,17 @@ import 'package:google_tasks/util/util.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:rxdart/rxdart.dart';
 
-class Model extends ChangeNotifier with SubscriptionHolderMixin {
-  Model({@required this.authenticator}) {
+class Model with SubscriptionHolderMixin {
+  Model({
+    @required this.authenticator,
+    @required this.navigatorKey,
+  }) {
     _decideNextRouteName();
   }
+
+  final Authenticator authenticator;
+  final GlobalKey<NavigatorState> navigatorKey;
+  NavigatorState get _navigator => navigatorKey.currentState;
 
   void _decideNextRouteName() async {
     subscriptionHolder.add(
@@ -24,13 +31,12 @@ class Model extends ChangeNotifier with SubscriptionHolderMixin {
     );
   }
 
-  void _updateNextRouteName(String name) {
-    logger.info(name);
-    _nextRouteName = name;
-    notifyListeners();
+  void _updateNextRouteName(String routeName) {
+    logger.info(routeName);
+    if (routeName != null) {
+      _navigator
+        ..popUntil((r) => r.isFirst)
+        ..pushNamed(routeName);
+    }
   }
-
-  final Authenticator authenticator;
-  String _nextRouteName;
-  String get nextRouteName => _nextRouteName;
 }

@@ -30,13 +30,11 @@ void main() {
                   .distinct((a, b) => a?.uid == b?.uid),
         ),
         Provider.value(value: UserObserver()),
-        ChangeNotifierProxyProvider2<Authenticator, UserObserver, Account>(
-          builder: (context, authenticator, userObserver, previous) =>
-              previous ??
-              Account(
-                authenticator: authenticator,
-                userObserver: userObserver,
-              ),
+        ChangeNotifierProvider<Account>(
+          builder: (context) => Account(
+            authenticator: Provider.of(context, listen: false),
+            userObserver: Provider.of(context, listen: false),
+          ),
         ),
       ],
       child: const App(),

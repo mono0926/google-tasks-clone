@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/l10n/l10n.dart';
-import 'package:google_tasks/model/model.dart';
-import 'package:google_tasks/model/service/service.dart';
 import 'package:google_tasks/pages/tasks_page/task_tile/task_tile.dart';
 import 'package:google_tasks/util/util.dart';
 import 'package:google_tasks/widgets/widgets.dart';
@@ -16,14 +14,12 @@ class TasksPage extends StatelessWidget {
 
   static const routeName = 'Tasks';
 
-  static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<TasksService, TasksModel>(
-      builder: (context, service, model) =>
-          model ??
-          TasksModel(
-            service: service,
-            l10n: L10n.of(context),
-          ),
+  static Widget withDependencies(BuildContext context) {
+    return ChangeNotifierProvider<TasksModel>(
+      builder: (_context) => TasksModel(
+        service: Provider.of(context, listen: false),
+        l10n: L10n.of(context),
+      ),
       child: const TasksPage._(),
     );
   }

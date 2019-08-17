@@ -11,14 +11,12 @@ class TaskTile extends StatelessWidget {
   const TaskTile._({Key key}) : super(key: key);
 
   static Widget withDependencies(TaskDoc doc) {
-    return ChangeNotifierProxyProvider<TasksService, TaskModel>(
+    return ChangeNotifierProvider<TaskModel>(
       key: ValueKey(doc.id),
-      builder: (context, service, model) =>
-          model ??
-          TaskModel(
-            doc: doc,
-            service: service,
-          ),
+      builder: (context) => TaskModel(
+        doc: doc,
+        service: Provider.of(context, listen: false),
+      ),
       child: const TaskTile._(),
     );
   }

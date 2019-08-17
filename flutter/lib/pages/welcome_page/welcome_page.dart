@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/l10n/l10n.dart';
-import 'package:google_tasks/model/service/service.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:undraw/undraw.dart';
@@ -11,9 +10,10 @@ class WelcomePage extends StatelessWidget {
   const WelcomePage._({Key key}) : super(key: key);
 
   static Widget withDependencies() {
-    return ChangeNotifierProxyProvider<Authenticator, Model>(
-      builder: (context, authenticator, previous) =>
-          previous ?? Model(authenticator: authenticator),
+    return ChangeNotifierProvider<Model>(
+      builder: (context) => Model(
+        authenticator: Provider.of(context, listen: false),
+      ),
       child: const WelcomePage._(),
     );
   }

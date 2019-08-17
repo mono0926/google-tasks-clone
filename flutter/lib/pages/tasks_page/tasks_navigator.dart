@@ -13,7 +13,8 @@ class TasksNavigator extends StatelessWidget {
   static const routeName = '/Tasks';
 
   static final _routes = <String, WidgetPageBuilder>{
-    TasksPage.routeName: (context, settings) => TasksPage.withDependencies(),
+    TasksPage.routeName: (context, settings) =>
+        TasksPage.withDependencies(context),
     TaskDetailPage.routeName: (context, settings) {
       return TaskDetailPage.withDependencies(
         settings.arguments,
