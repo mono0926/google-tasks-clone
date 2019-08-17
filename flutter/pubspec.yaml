@@ -22,6 +22,7 @@ dependencies:
   simple_logger: any
   undraw: any
   google_sign_in: any
+  cloud_functions: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

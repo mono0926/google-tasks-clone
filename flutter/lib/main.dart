@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_tasks/model/notifier/account.dart';
 import 'package:google_tasks/model/service/service.dart';
 import 'package:google_tasks/model/service/user_observer.dart';
+import 'package:google_tasks/util/app_navigator.dart';
 import 'package:provider/provider.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
 
@@ -19,6 +20,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        Provider.value(value: AppNavigator()),
         RouteObserverProvider(),
         Provider.value(value: Authenticator()),
         StreamProvider<FirebaseUser>(

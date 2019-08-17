@@ -1,2 +1,2 @@
-export 'authenticator.dart';
+export 'authenticator/authenticator.dart';
 export 'tasks_service.dart';

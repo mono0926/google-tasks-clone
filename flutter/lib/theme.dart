@@ -59,5 +59,8 @@ ThemeData buildTheme() {
     primaryIconTheme: base.primaryIconTheme.copyWith(
       color: iconColor,
     ),
+    snackBarTheme: base.snackBarTheme.copyWith(
+      behavior: SnackBarBehavior.floating,
+    ),
   );
 }
