@@ -23,9 +23,4 @@ class TasksModel extends ChangeNotifier with SubscriptionHolderMixin {
   void add(Task task) {
 //    _tasks.add(task);
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
