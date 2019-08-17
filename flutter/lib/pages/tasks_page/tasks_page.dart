@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_tasks/l10n/l10n.dart';
 import 'package:google_tasks/model/model.dart';
 import 'package:google_tasks/model/service/service.dart';
 import 'package:google_tasks/pages/tasks_page/task_tile/task_tile.dart';
@@ -10,7 +11,7 @@ import 'input_sheet/input_sheet.dart';
 import 'setting_sheet/setting_sheet.dart';
 import 'tasks_model.dart';
 
-class TasksPage extends StatefulWidget {
+class TasksPage extends StatelessWidget {
   const TasksPage._({Key key}) : super(key: key);
 
   static const routeName = 'Tasks';
@@ -18,41 +19,19 @@ class TasksPage extends StatefulWidget {
   static Widget withDependencies() {
     return ChangeNotifierProxyProvider<TasksService, TasksModel>(
       builder: (context, service, model) =>
-          model ?? TasksModel(service: service),
+          model ??
+          TasksModel(
+            service: service,
+            l10n: L10n.of(context),
+          ),
       child: const TasksPage._(),
-    );
-  }
-
-  @override
-  _TasksPageState createState() => _TasksPageState();
-}
-
-class _TasksPageState extends State<TasksPage> with StateHelperMixin {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  AppFeedback get feedback => AppFeedback(_scaffoldKey);
-
-  @override
-  void initState() {
-    super.initState();
-    final tasksService = Provider.of<TasksService>(context, listen: false);
-    subscriptionHolder.add(
-      tasksService.deleted.listen((doc) {
-        feedback.showUndo(
-          text: l10n.taskDeleted,
-          onUndo: () {
-            tasksService.add(doc.entity, id: doc.id);
-          },
-        );
-      }),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: Provider.of<TasksModel>(context, listen: false).scaffoldKey,
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _buildFab(context),
