@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
 
 import 'app.dart';
-import 'model/model.dart';
 import 'model/notifier/notifier.dart';
 
 void main() {
@@ -27,11 +26,6 @@ void main() {
               Provider.of<Authenticator>(context, listen: false)
                   .onAuthStateChanged
                   .distinct((a, b) => a?.uid == b?.uid),
-        ),
-        ProxyProvider<FirebaseUser, TasksService>(
-          initialBuilder: (context) => TasksService(),
-          builder: (context, firUser, tasksService) =>
-              tasksService..updateFirebaseUser(firUser),
         ),
         Provider.value(value: UserObserver()),
         ChangeNotifierProxyProvider2<Authenticator, UserObserver, Account>(

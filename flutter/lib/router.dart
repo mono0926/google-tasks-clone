@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_tasks/pages/tasks_page/tasks_page.dart';
 import 'package:google_tasks/pages/welcome_page/welcome_page.dart';
+import 'package:google_tasks/util/util.dart';
 import 'package:mono_kit/mono_kit.dart';
 
+import 'pages/root_page/root_page.dart';
+import 'pages/tasks_page/tasks_navigator.dart';
+
+// ignore: avoid_classes_with_only_static_members
 class Router {
   static const root = '/';
 
-  final _routes = <String, Widget Function(BuildContext, RouteSettings)>{
-//    root: (context, settings) => const ListPage(),
-//    WelcomePage.routeName: (context, settings) => const WelcomePage(),
-//    TasksPage.routeName: (context, settings) => TasksPage.withDependencies(),
+  static final _routes = <String, WidgetBuilder>{
+    root: (context) => RootPage.withDependencies(),
   };
-  final _fadeRoutes = <String, Widget Function(BuildContext, RouteSettings)>{
-//    root: (context, settings) => const ListPage(),
-    WelcomePage.routeName: (context, settings) =>
-        WelcomePage.withDependencies(),
-    TasksPage.routeName: (context, settings) => TasksPage.withDependencies(),
+  static final _fadeRoutes = <String, WidgetBuilder>{
+    WelcomePage.routeName: (context) => WelcomePage.withDependencies(),
+    TasksPage.routeName: (context) => const TasksNavigator(),
   };
 
-  Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    logger.info(settings.name);
     var pageBuilder = _routes[settings.name];
     if (pageBuilder != null) {
       return MaterialPageRoute<void>(
-        builder: (context) => pageBuilder(context, settings),
+        builder: pageBuilder,
         settings: settings,
       );
     }
     pageBuilder = _fadeRoutes[settings.name];
     if (pageBuilder != null) {
       return FadePageRoute<void>(
-        builder: (context) => pageBuilder(context, settings),
+        builder: pageBuilder,
         settings: settings,
       );
     }
