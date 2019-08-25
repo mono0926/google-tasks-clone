@@ -64,7 +64,7 @@ class SettingSheet extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               onTap: model.signOut,
               title: const Text('Sign out'),
