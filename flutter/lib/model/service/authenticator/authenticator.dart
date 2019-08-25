@@ -26,14 +26,14 @@ class Authenticator {
       return null;
     }
     final gAuth = await gAccount.authentication;
-    final firUser = await _auth.signInWithCredential(
+    final authResult = await _auth.signInWithCredential(
       GoogleAuthProvider.getCredential(
         idToken: gAuth.idToken,
         accessToken: gAuth.accessToken,
       ),
     );
-    logger.info(firUser);
-    return firUser;
+    logger.info(authResult);
+    return authResult?.user;
   }
 
   Future<void> signOut() async {
