@@ -12,6 +12,7 @@ import 'app.dart';
 import 'model/notifier/notifier.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   final originalFlutterError = FlutterError.onError;
   FlutterError.onError = (error) {
     originalFlutterError(error);
