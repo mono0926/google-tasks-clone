@@ -45,13 +45,11 @@ class DueDateTimeDialog extends StatelessWidget {
               ),
             ),
           ),
-          ButtonTheme.bar(
-            child: const ButtonBar(
-              children: [
-                _CancelButton(),
-                _DoneButton(),
-              ],
-            ),
+          const ButtonBar(
+            children: [
+              _CancelButton(),
+              _DoneButton(),
+            ],
           ),
         ],
       ),
