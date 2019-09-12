@@ -274,13 +274,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
-  cloud_firestore: 5031bce1cfbcfc667134d253ff5f448d085cdaf6
+  cloud_firestore: 0ac494d23db743f104b95d3291946afec187b74c
   cloud_functions: d849499a3a984691a808f3737f54a9c2ef4011f2
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
-  firebase_analytics: 32e04b548ece5c04c9798cbf393a7884f0b21951
-  firebase_auth: abe6028714069ea62fbe52f720786940672a11f2
+  firebase_analytics: 045e7ebe7b8a4d27357168072868ff082dca15a6
+  firebase_auth: 1e3b7bdd37b9fbd4ef75ba1d985b00be09e02d3d
   firebase_core: ae55ea92448ec8675d325da4db22cf3b4d58a54d
   firebase_crashlytics: 6b8e7358dbac1359c1e29e0796adf48eddef99c9
   firebase_performance: f7b5c78075a37ae9c5e6f44822e377d57d4da6d8
