@@ -14,10 +14,8 @@ typedef WidgetPageBuilder = Widget Function(
 
 // ignore: avoid_classes_with_only_static_members
 class Router {
-  static const root = '/';
-
   static final _routes = <String, WidgetPageBuilder>{
-    root: (context, settings) => RootPage.withDependencies(),
+    '/': (context, settings) => RootPage.withDependencies(),
   };
   static final _fadeRoutes = <String, WidgetPageBuilder>{
     WelcomePage.routeName: (context, settings) =>
