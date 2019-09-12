@@ -23,7 +23,7 @@ class SettingSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    final account = Provider.of<Account>(context);
+    final account = Provider.of<AccountNotifier>(context);
     final firUser = account.firUser;
     if (firUser == null) {
       return const SizedBox();

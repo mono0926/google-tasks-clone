@@ -8,8 +8,8 @@ import 'package:google_tasks/model/service/user_observer.dart';
 import 'package:meta/meta.dart';
 import 'package:mono_kit/mono_kit.dart';
 
-class Account extends ChangeNotifier with SubscriptionHolderMixin {
-  Account({
+class AccountNotifier extends ChangeNotifier with SubscriptionHolderMixin {
+  AccountNotifier({
     @required this.authenticator,
     @required this.userObserver,
   }) {
