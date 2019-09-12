@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/service/service.dart';
 import 'package:google_tasks/router.dart';
@@ -26,10 +25,9 @@ class TasksNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ProxyProvider<FirebaseUser, TasksService>(
-          initialBuilder: (context) => TasksService(),
-          builder: (context, firUser, tasksService) =>
-              tasksService..updateFirebaseUser(firUser),
+        Provider(
+          builder: (context) =>
+              TasksService(authenticator: Provider.of(context, listen: false)),
         ),
       ],
       child: Navigator(

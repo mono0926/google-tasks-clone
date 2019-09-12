@@ -4,7 +4,6 @@ import 'package:google_tasks/pages/tasks_page/tasks_page.dart';
 import 'package:google_tasks/pages/welcome_page/welcome_page.dart';
 import 'package:google_tasks/util/util.dart';
 import 'package:mono_kit/mono_kit.dart';
-import 'package:rxdart/rxdart.dart';
 
 class Model with SubscriptionHolderMixin {
   Model({
@@ -20,7 +19,7 @@ class Model with SubscriptionHolderMixin {
 
   void _decideNextRouteName() async {
     subscriptionHolder.add(
-      Observable(authenticator.onAuthStateChanged)
+      authenticator.firUser
           .map<String>((firUser) {
             return firUser == null
                 ? WelcomePage.routeName

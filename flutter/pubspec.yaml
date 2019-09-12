@@ -10,6 +10,7 @@ dependencies:
     sdk: flutter
   cloud_firestore: any
   cupertino_icons: any
+  disposable_provider: any
   firebase_analytics: any
   firebase_auth: any
   firebase_core: any

@@ -1,18 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_tasks/util/util.dart';
+import 'package:rxdart/rxdart.dart';
+
+import '../../model.dart';
 
 export 'auth_error_codes.dart';
 
-class Authenticator {
+class Authenticator implements Disposable {
+  Authenticator() {
+    _auth.onAuthStateChanged.pipe(_firUser);
+    _firUser.distinct((a, b) => a?.uid == b?.uid).map((firUser) {
+      if (firUser == null) {
+        return null;
+      }
+      return UsersRef.ref().docRef(firUser.uid);
+    }).pipe(_userRef);
+  }
+
   final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn(scopes: [
     'email',
     'https://www.googleapis.com/auth/contacts.readonly',
   ]);
+  final _firUser = BehaviorSubject<FirebaseUser>();
+  final _userRef = BehaviorSubject<UserRef>();
 
-  Future<FirebaseUser> firUser() => _auth.currentUser();
-  Stream<FirebaseUser> get onAuthStateChanged => _auth.onAuthStateChanged;
+  Future<FirebaseUser> fetchFirUser() => _auth.currentUser();
+  ValueObservable<FirebaseUser> get firUser => _firUser;
+  ValueObservable<UserRef> get userRef => _userRef;
 
   Future<FirebaseUser> signIn() async {
     final current = await _auth.currentUser();
@@ -38,6 +54,12 @@ class Authenticator {
 
   Future<void> signOut() async {
     await _auth.signOut();
-    await _googleSignIn.signOut();
+//    await _googleSignIn.signOut();
+  }
+
+  @override
+  void dispose() {
+    _firUser.close();
+    _userRef.close();
   }
 }
