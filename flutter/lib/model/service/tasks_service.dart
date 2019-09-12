@@ -27,7 +27,8 @@ class TasksService with SubscriptionHolderMixin {
         firUser == null ? null : UsersRef.ref().docRef(firUser.uid).tasksRef;
   }
 
-  Stream<List<TaskDoc>> docs() => _tasksRef.documents((ref) => ref);
+  Stream<List<TaskDoc>> docs() => _tasksRef
+      .documents((ref) => ref.orderBy(EntityField.createdAt, descending: true));
   Stream<TaskDoc> doc(String id) => _tasksRef.docRef(id).document();
   Stream<TaskDoc> get deleted => _deleted.stream;
 

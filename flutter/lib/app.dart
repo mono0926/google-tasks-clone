@@ -17,6 +17,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       navigatorKey: Provider.of<AppNavigator>(context).key,
       theme: buildTheme(),
+      darkTheme: ThemeData.dark(),
       navigatorObservers: [RouteObserverProvider.of(context)],
       builder: (context, child) => TextScaleFactor(child: child),
       localizationsDelegates: [

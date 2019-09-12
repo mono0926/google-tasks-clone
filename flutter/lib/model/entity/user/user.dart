@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:google_tasks/model/firestore/firestore.dart';
+import 'package:google_tasks/model/model.dart';
 
 export 'user_doc.dart';
 export 'users_ref.dart';

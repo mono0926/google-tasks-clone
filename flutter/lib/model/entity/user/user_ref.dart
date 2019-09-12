@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_tasks/model/entity/entity.dart';
-import 'package:google_tasks/model/firestore/firestore.dart';
+import 'package:google_tasks/model/model.dart';
 import 'package:meta/meta.dart';
 
 import 'user.dart';

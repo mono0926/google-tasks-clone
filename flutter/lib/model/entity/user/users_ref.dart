@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_tasks/model/firestore/firestore.dart';
+import 'package:google_tasks/model/model.dart';
 
 import 'user.dart';
 import 'user_doc.dart';

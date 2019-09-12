@@ -15,6 +15,8 @@ dependencies:
   firebase_auth: any
   firebase_core: any
   firebase_crashlytics: any
+  firestore_ref:
+    path: ../../flutter_firestore_ref
   mono_kit: any
   firebase_performance: any
   provider: any
