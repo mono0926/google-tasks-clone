@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 mixin Messages {
@@ -52,4 +53,6 @@ mixin Messages {
         '1件のタスクを削除しました',
         name: 'taskDeleted',
       );
+
+  String timeOfDay(TimeOfDay time) => '';
 }
