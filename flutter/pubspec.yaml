@@ -31,5 +31,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   intl_translation: any
+  pedantic_mono: any
 flutter:
   uses-material-design: true
