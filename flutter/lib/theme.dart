@@ -53,7 +53,7 @@ ThemeData buildTheme() {
         borderRadius: BorderRadius.circular(10),
       ),
     ),
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       fillColor: fillColor,
     ),
     primaryIconTheme: base.primaryIconTheme.copyWith(

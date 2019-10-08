@@ -29,7 +29,7 @@ class TaskDetailPage extends StatelessWidget {
             onPressed: () async {
               final model = Provider.of<TaskModel>(context, listen: false);
               Navigator.of(context).pop();
-              await Future<void>.delayed(Duration(milliseconds: 500));
+              await Future<void>.delayed(const Duration(milliseconds: 500));
               model.delete();
             },
           )

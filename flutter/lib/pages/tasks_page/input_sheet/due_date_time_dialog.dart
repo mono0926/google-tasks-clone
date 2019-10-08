@@ -148,8 +148,8 @@ class _Picker extends StatelessWidget {
     return MonthPicker(
       selectedDate: model.value.dateTime,
       onChanged: (date) => model.value = model.value.copyWith(date),
-      firstDate: DateTime.now().subtract(Duration(days: 365)),
-      lastDate: DateTime.now().add(Duration(days: 3650)),
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 3650)),
     );
   }
 }
