@@ -175,7 +175,7 @@ class _SaveButton extends StatelessWidget {
   }
 }
 
-void _showDueDateTimeDialog(BuildContext context) async {
+Future _showDueDateTimeDialog(BuildContext context) async {
   final model = Provider.of<Model>(context, listen: false)..saveFocus();
   await showDialog<void>(
     context: context,

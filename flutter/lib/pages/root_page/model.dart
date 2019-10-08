@@ -17,7 +17,7 @@ class Model with SubscriptionHolderMixin {
   final GlobalKey<NavigatorState> navigatorKey;
   NavigatorState get _navigator => navigatorKey.currentState;
 
-  void _decideNextRouteName() async {
+  Future _decideNextRouteName() async {
     subscriptionHolder.add(
       authenticator.firUser
           .map<String>((firUser) {

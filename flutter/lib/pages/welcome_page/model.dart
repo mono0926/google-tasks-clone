@@ -10,7 +10,7 @@ class Model extends ChangeNotifier {
 
   Status get status => _status;
 
-  void signIn() async {
+  Future signIn() async {
     _updateStatus(Status.inProgress);
     final firUser = await authenticator.signIn();
     _updateStatus(firUser == null ? Status.loggedOut : Status.loggedIn);

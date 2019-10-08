@@ -9,7 +9,7 @@ class Model extends ChangeNotifier {
 
   Status get status => _status;
 
-  void signOut() async {
+  Future signOut() async {
     _updateStatus(Status.inProgress);
     await authenticator.signOut();
     _updateStatus(Status.signedOut);
