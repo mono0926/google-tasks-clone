@@ -1,8 +1,63 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2019-08-15T10:45:26.408999",
+  "@@last_modified": "2019-10-21T21:15:53.353863",
+  "buttonUndo": "UNDO",
+  "@buttonUndo": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "buttonDone": "DONE",
+  "@buttonDone": {
+    "type": "text",
+    "placeholders": {}
+  },
   "welcomeTitle": "Welcome to Tasks",
   "@welcomeTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "copiedToPasteboard": "コピーしました。",
+  "@copiedToPasteboard": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "accountExistsWithDifferentCredential": "同一のメールアドレスに紐付いた他のアカウントで登録済みなので、そちらからログインしてください。",
+  "@accountExistsWithDifferentCredential": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorInvalidPassword": "パスワードが違います",
+  "@errorInvalidPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorTooManyRequests": "連続してログインに失敗したため、しばらく利用できません",
+  "@errorTooManyRequests": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorRequiresRecentLogin": "その操作を実行するためには、再ログインが必要です。",
+  "@errorRequiresRecentLogin": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorUserDisabled": "アプリの利用制限がかかっているため、ご利用できません。",
+  "@errorUserDisabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "notImplemented": "未実装です",
+  "@notImplemented": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorOccurred": "エラーが発生しました",
+  "@errorOccurred": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "taskDeleted": "1件のタスクを削除しました",
+  "@taskDeleted": {
     "type": "text",
     "placeholders": {}
   }
