@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0+2"
+  firebase:
+    dependency: transitive
+    description:
+      name: firebase
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.0"
   firebase_analytics:
     dependency: "direct main"
     description:
@@ -154,7 +161,7 @@ packages:
       path: "../../flutter_firestore_ref"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.3.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -247,6 +254,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.7"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1+1"
   kernel:
     dependency: transitive
     description:

@@ -27,7 +27,7 @@ class AccountNotifier extends ChangeNotifier with SubscriptionHolderMixin {
               _userDoc = userDoc;
               notifyListeners();
               if (userDoc == null) {
-                UsersRef.ref().docRef(uid).setJson(<String, dynamic>{});
+                UsersRef.ref().docRef(uid).setData(<String, dynamic>{});
               }
             });
           }
