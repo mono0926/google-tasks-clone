@@ -24,8 +24,8 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     final width = MediaQuery.of(context).size.width;
-    return Barrier(
-      showProgress: ValueNotifier<bool>(model.status == Status.inProgress),
+    return Barrier.value(
+      showProgress: model.status == Status.inProgress,
       child: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
