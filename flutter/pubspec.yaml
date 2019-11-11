@@ -16,8 +16,10 @@ dependencies:
   firebase_core: any
   firebase_crashlytics: any
   firestore_ref:
-    path: ../../flutter_firestore_ref
-  mono_kit: any
+  mono_kit:
+    git:
+      url: https://github.com/mono0926/flutter_mono_kit.git
+      ref: develop
   firebase_performance: any
   provider: any
   route_observer_mixin: any
@@ -26,7 +28,10 @@ dependencies:
   undraw: any
   google_sign_in: any
   cloud_functions: any
-  cached_network_image: any
+  cached_network_image:
+    git:
+      url: https://github.com/renefloor/flutter_cached_network_image.git
+      ref: v2.0.0-rc
 dev_dependencies:
   flutter_test:
     sdk: flutter
