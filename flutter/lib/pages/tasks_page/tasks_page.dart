@@ -16,7 +16,7 @@ class TasksPage extends StatelessWidget {
 
   static Widget withDependencies(BuildContext context) {
     return ChangeNotifierProvider<TasksModel>(
-      builder: (_context) => TasksModel(
+      create: (_context) => TasksModel(
         service: Provider.of(context, listen: false),
         l10n: L10n.of(context),
       ),

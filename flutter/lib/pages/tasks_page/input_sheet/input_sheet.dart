@@ -10,7 +10,7 @@ class InputSheet extends StatelessWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProvider<Model>(
-      builder: (context) => Model(
+      create: (context) => Model(
         service: Provider.of(context, listen: false),
       ),
       child: const InputSheet._(),

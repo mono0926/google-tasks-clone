@@ -16,7 +16,7 @@ class DueDateTimeDialog extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Model>.value(value: model),
-        ChangeNotifierProvider<_DateModel>(builder: (context) {
+        ChangeNotifierProvider<_DateModel>(create: (context) {
           final model = Provider.of<Model>(context, listen: false);
           return _DateModel(model.task.due ?? Due(DateTime.now()));
         }),

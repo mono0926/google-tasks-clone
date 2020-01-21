@@ -26,7 +26,7 @@ class TasksNavigator extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(
-          builder: (context) =>
+          create: (context) =>
               TasksService(authenticator: Provider.of(context, listen: false)),
         ),
       ],

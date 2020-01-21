@@ -8,7 +8,7 @@ class RootPage extends StatelessWidget {
   const RootPage._({Key key}) : super(key: key);
   static Widget withDependencies() {
     return Provider<Model>(
-      builder: (context) => Model(
+      create: (context) => Model(
         authenticator: Provider.of(context, listen: false),
         navigatorKey: Provider.of<AppNavigator>(context, listen: false).key,
       ),

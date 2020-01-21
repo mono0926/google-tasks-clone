@@ -16,12 +16,12 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider(builder: (context) => AppNavigator()),
+        Provider(create: (context) => AppNavigator()),
         RouteObserverProvider(),
-        DisposableProvider(builder: (context) => Authenticator()),
-        Provider(builder: (context) => UserObserver()),
+        DisposableProvider(create: (context) => Authenticator()),
+        Provider(create: (context) => UserObserver()),
         ChangeNotifierProvider<AccountNotifier>(
-          builder: (context) => AccountNotifier(
+          create: (context) => AccountNotifier(
             authenticator: Provider.of(context, listen: false),
             userObserver: Provider.of(context, listen: false),
           ),

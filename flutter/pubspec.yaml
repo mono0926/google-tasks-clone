@@ -2,7 +2,7 @@ name: google_tasks
 description: Google Tasks clone
 version: 1.0.0+1
 environment:
-  sdk: ">=2.4.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -15,11 +15,8 @@ dependencies:
   firebase_auth: any
   firebase_core: any
   firebase_crashlytics: any
-  firestore_ref:
-  mono_kit:
-    git:
-      url: https://github.com/mono0926/flutter_mono_kit.git
-      ref: develop
+  firestore_ref: any
+  mono_kit: any
   firebase_performance: any
   provider: any
   route_observer_mixin: any
@@ -28,10 +25,7 @@ dependencies:
   undraw: any
   google_sign_in: any
   cloud_functions: any
-  cached_network_image:
-    git:
-      url: https://github.com/renefloor/flutter_cached_network_image.git
-      ref: v2.0.0-rc
+  cached_network_image: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -13,7 +13,7 @@ class TaskTile extends StatelessWidget {
   static Widget withDependencies(TaskDoc doc) {
     return ChangeNotifierProvider<TaskModel>(
       key: ValueKey(doc.id),
-      builder: (context) => TaskModel(
+      create: (context) => TaskModel(
         doc: doc,
         service: Provider.of(context, listen: false),
       ),

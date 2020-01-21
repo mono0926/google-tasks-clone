@@ -27,8 +27,8 @@ class Authenticator implements Disposable {
   final _userRef = BehaviorSubject<UserRef>();
 
   Future<FirebaseUser> fetchFirUser() => _auth.currentUser();
-  ValueObservable<FirebaseUser> get firUser => _firUser;
-  ValueObservable<UserRef> get userRef => _userRef;
+  ValueStream<FirebaseUser> get firUser => _firUser;
+  ValueStream<UserRef> get userRef => _userRef;
 
   Future<FirebaseUser> signIn() async {
     final current = await _auth.currentUser();

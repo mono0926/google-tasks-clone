@@ -11,7 +11,7 @@ class WelcomePage extends StatelessWidget {
 
   static Widget withDependencies() {
     return ChangeNotifierProvider<Model>(
-      builder: (context) => Model(
+      create: (context) => Model(
         authenticator: Provider.of(context, listen: false),
       ),
       child: const WelcomePage._(),
