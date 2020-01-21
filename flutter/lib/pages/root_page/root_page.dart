@@ -12,6 +12,7 @@ class RootPage extends StatelessWidget {
         authenticator: Provider.of(context, listen: false),
         navigatorKey: Provider.of<AppNavigator>(context, listen: false).key,
       ),
+      lazy: false,
       child: const RootPage._(),
     );
   }
