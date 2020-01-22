@@ -1,6 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_ref/firestore_ref.dart';
 import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'due.g.dart';
+
+@JsonSerializable()
 @immutable
 class Due {
   const Due(
@@ -8,19 +12,12 @@ class Due {
     this.includeTime = false,
   });
 
-  Due.fromJson(Map<String, dynamic> json)
-      : this(
-          (json[DueField.dateTime] as Timestamp).toDate(),
-          includeTime: json[DueField.includeTime] as bool,
-        );
+  factory Due.fromJson(Map<String, dynamic> json) => _$DueFromJson(json);
+  Map<String, dynamic> toJson() => _$DueToJson(this);
 
+  @timestampJsonKey
   final DateTime dateTime;
   final bool includeTime;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        DueField.dateTime: Timestamp.fromDate(dateTime),
-        DueField.includeTime: includeTime,
-      };
 
   Due copyWith(
     DateTime dateTime, {

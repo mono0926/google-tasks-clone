@@ -1,25 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 export 'user_doc.dart';
 export 'users_ref.dart';
 
-class User extends Entity {
+part 'user.g.dart';
+
+@JsonSerializable()
+class User with Entity {
   const User({
     @required this.name,
     @required this.imageUrl,
   });
 
-  User.fromJson(Map<String, dynamic> json)
-      : this(
-          name: json[UserField.name] as String,
-          imageUrl: json[UserField.imageUrl] as String,
-        );
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   final String name;
   final String imageUrl;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{};
 }
 
 class UserField {

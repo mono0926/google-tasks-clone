@@ -14,7 +14,7 @@ class Model extends ChangeNotifier {
   final FocusNode detailsFocusNode = FocusNode();
   FocusNode lastFocusNode;
 
-  var _task = const Task.empty();
+  var _task = Task.empty();
   var _isDetailsShown = false;
 
   Task get task => _task;

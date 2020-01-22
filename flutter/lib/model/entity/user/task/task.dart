@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_tasks/model/model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'due.dart';
 
@@ -7,43 +8,39 @@ export 'due.dart';
 export 'task_doc.dart';
 export 'tasks_ref.dart';
 
-class Task extends Entity {
-  const Task({
+part 'task.g.dart';
+
+@JsonSerializable()
+class Task with Entity, HasTimestamp {
+  Task({
     @required this.title,
     this.details,
     this.due,
-    DateTime createdAt,
-    DateTime updatedAt,
-  }) : super(
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-        );
+    this.createdAt,
+    this.updatedAt,
+  });
 
-  const Task.empty()
+  Task.empty()
       : this(
           title: null,
         );
 
-  Task.fromJson(Map<String, dynamic> json)
-      : this(
-          title: json[TaskField.title] as String,
-          details: json[TaskField.details] as String,
-          due: parse<Due>(json,
-              key: TaskField.due, fromJson: (json) => Due.fromJson(json)),
-          createdAt: parseCreatedAt(json),
-          updatedAt: parseUpdatedAt(json),
-        );
+  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        TaskField.title: title,
-        TaskField.details: details,
-        TaskField.due: due?.toJson(),
+        ..._$TaskToJson(this)..remove(TimestampField.createdAt),
         ...timestampJson,
       };
 
   final String title;
   final String details;
   final Due due;
+  @override
+  @timestampJsonKey
+  final DateTime createdAt;
+  @override
+  @timestampJsonKey
+  final DateTime updatedAt;
 
   Task copyWith({
     String title,
