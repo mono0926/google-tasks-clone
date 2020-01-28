@@ -8,34 +8,26 @@ import 'package:mono_kit/mono_kit.dart';
 class Model with SubscriptionHolderMixin {
   Model({
     @required this.authenticator,
-    @required this.navigatorKey,
+    @required this.navigator,
   }) {
-    _decideNextRouteName();
+    _navigateToRootPage();
   }
 
   final Authenticator authenticator;
-  final GlobalKey<NavigatorState> navigatorKey;
-  NavigatorState get _navigator => navigatorKey.currentState;
+  final AppNavigator navigator;
 
-  Future _decideNextRouteName() async {
+  Future _navigateToRootPage() async {
     subscriptionHolder.add(
       authenticator.firUser
-          .map<String>((firUser) {
+          .map((firUser) {
             return firUser == null
                 ? WelcomePage.routeName
                 : TasksPage.routeName;
           })
           .distinct((a, b) => a == b)
-          .listen(_updateNextRouteName),
+          .listen(
+            (routeName) => navigator.navigator.pushReplacementNamed(routeName),
+          ),
     );
-  }
-
-  void _updateNextRouteName(String routeName) {
-    logger.info(routeName);
-    if (routeName != null) {
-      _navigator
-        ..popUntil((r) => r.isFirst)
-        ..pushNamed(routeName);
-    }
   }
 }

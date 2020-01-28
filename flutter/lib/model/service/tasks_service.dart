@@ -12,7 +12,7 @@ class TasksService with SubscriptionHolderMixin {
     _tasksRef = authenticator.userRef.value.tasksRef;
     subscriptionHolder.add(
       authenticator.userRef.listen((userRef) {
-        _tasksRef = userRef.tasksRef;
+        _tasksRef = userRef?.tasksRef;
       }),
     );
   }
