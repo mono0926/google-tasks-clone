@@ -24,7 +24,7 @@ class Router with SubscriptionHolderMixin {
   final Authenticator authenticator;
   final AppNavigator navigator;
 
-  Future _handleRootPage() async {
+  void _handleRootPage() {
     subscriptionHolder.add(
       authenticator.firUser
           .map((firUser) {
