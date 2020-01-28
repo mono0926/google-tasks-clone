@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_tasks/pages/root_page/root_page.dart';
 import 'package:mono_kit/mono_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:route_observer_mixin/route_observer_mixin.dart';
@@ -31,8 +30,7 @@ class App extends StatelessWidget {
         Locale('en'),
         Locale('ja'),
       ],
-      onGenerateRoute: Router.onGenerateRoute,
-      home: RootPage.wrapped(),
+      onGenerateRoute: Provider.of<Router>(context).onGenerateRoute,
     );
   }
 }

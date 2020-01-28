@@ -4,6 +4,8 @@ import 'package:google_tasks/pages/welcome_page/welcome_page.dart';
 import 'package:google_tasks/util/util.dart';
 import 'package:mono_kit/mono_kit.dart';
 
+import 'model/model.dart';
+import 'pages/root_page.dart';
 import 'pages/tasks_page/task_detail_page/task_detail_page.dart';
 
 typedef WidgetPageBuilder = Widget Function(
@@ -11,22 +13,49 @@ typedef WidgetPageBuilder = Widget Function(
   RouteSettings settings,
 );
 
-// ignore: avoid_classes_with_only_static_members
-class Router {
+class Router with SubscriptionHolderMixin {
+  Router({
+    @required this.authenticator,
+    @required this.navigator,
+  }) {
+    _navigateToRootPage();
+  }
+
+  final Authenticator authenticator;
+  final AppNavigator navigator;
+
+  Future _navigateToRootPage() async {
+    subscriptionHolder.add(
+      authenticator.firUser
+          .map((firUser) {
+            return firUser == null
+                ? WelcomePage.routeName
+                : TasksPage.routeName;
+          })
+          .distinct((a, b) => a == b)
+          .listen(
+            (routeName) {
+              navigator.popToRoot();
+              navigator.navigator.pushReplacementNamed(routeName);
+            },
+          ),
+    );
+  }
+
   static final _routes = <String, WidgetPageBuilder>{
-//    '/': (context, settings) => RootPage.wrapped(),
+    '/': (context, settings) => const RootPage(),
     TaskDetailPage.routeName: (context, settings) {
       return TaskDetailPage.wrapped(
         settings.arguments,
       );
     },
   };
-  static final _fadeRoutes = <String, WidgetPageBuilder>{
+  final _fadeRoutes = <String, WidgetPageBuilder>{
     TasksPage.routeName: (context, settings) => TasksPage.wrapped(context),
     WelcomePage.routeName: (context, settings) => WelcomePage.wrapped(),
   };
 
-  static Route<dynamic> onGenerateRoute(RouteSettings _settings) {
+  Route<dynamic> onGenerateRoute(RouteSettings _settings) {
     var settings = _settings;
     logger.info(settings.name);
     var pageBuilder = _routes[settings.name];

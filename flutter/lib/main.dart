@@ -1,6 +1,7 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_tasks/model/model.dart';
+import 'package:google_tasks/router.dart';
 import 'package:google_tasks/util/util.dart';
 
 import 'app.dart';
@@ -19,6 +20,13 @@ void main() {
         Provider(create: (context) => AppNavigator()),
         RouteObserverProvider(),
         DisposableProvider(create: (context) => Authenticator()),
+        DisposableProvider(
+          create: (context) => Router(
+            authenticator: Provider.of(context, listen: false),
+            navigator: Provider.of<AppNavigator>(context, listen: false),
+          ),
+          lazy: false,
+        ),
         Provider(create: (context) => UserObserver()),
         ChangeNotifierProvider<AccountNotifier>(
           create: (context) => AccountNotifier(
