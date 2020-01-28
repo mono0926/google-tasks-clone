@@ -27,16 +27,13 @@ class Router with SubscriptionHolderMixin {
   void _handleRootPage() {
     subscriptionHolder.add(
       authenticator.firUser
-          .map((firUser) {
-            return firUser == null
-                ? WelcomePage.routeName
-                : TasksPage.routeName;
-          })
+          .map((firUser) =>
+              firUser == null ? WelcomePage.routeName : TasksPage.routeName)
           .distinct((a, b) => a == b)
           .listen((routeName) {
-            navigator.popToRoot();
-            navigator.navigator.pushReplacementNamed(routeName);
-          }),
+        navigator.popToRoot();
+        navigator.navigator.pushReplacementNamed(routeName);
+      }),
     );
   }
 
