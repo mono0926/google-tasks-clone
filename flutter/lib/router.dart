@@ -18,13 +18,13 @@ class Router with SubscriptionHolderMixin {
     @required this.authenticator,
     @required this.navigator,
   }) {
-    _navigateToRootPage();
+    _handleRootPage();
   }
 
   final Authenticator authenticator;
   final AppNavigator navigator;
 
-  Future _navigateToRootPage() async {
+  Future _handleRootPage() async {
     subscriptionHolder.add(
       authenticator.firUser
           .map((firUser) {
