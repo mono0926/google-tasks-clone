@@ -25,7 +25,6 @@ void main() {
             authenticator: Provider.of(context, listen: false),
             navigator: Provider.of<AppNavigator>(context, listen: false),
           ),
-          lazy: false,
         ),
         Provider(create: (context) => UserObserver()),
         ChangeNotifierProvider<AccountNotifier>(
