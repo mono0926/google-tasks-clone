@@ -12,7 +12,7 @@ class _DateModel extends ValueNotifier<Due> {
 class DueDateTimeDialog extends StatelessWidget {
   const DueDateTimeDialog._({Key key}) : super(key: key);
 
-  static Widget withDependencies({@required Model model}) {
+  static Widget wrapped({@required Model model}) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Model>.value(value: model),

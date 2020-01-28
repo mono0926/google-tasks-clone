@@ -6,7 +6,7 @@ import 'model.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage._({Key key}) : super(key: key);
-  static Widget withDependencies() {
+  static Widget wrapped() {
     return Provider<Model>(
       create: (context) => Model(
         authenticator: Provider.of(context, listen: false),

@@ -14,7 +14,7 @@ class TasksPage extends StatelessWidget {
 
   static const routeName = 'Tasks';
 
-  static Widget withDependencies(BuildContext context) {
+  static Widget wrapped(BuildContext context) {
     return ChangeNotifierProvider<TasksModel>(
       create: (_context) => TasksModel(
         service: Provider.of(context, listen: false),
@@ -42,7 +42,7 @@ class TasksPage extends StatelessWidget {
         showModalBottomSheet<void>(
           isScrollControlled: true,
           context: context,
-          builder: (context) => SafeArea(child: InputSheet.withDependencies()),
+          builder: (context) => SafeArea(child: InputSheet.wrapped()),
         );
       },
       child: const GoogleAdd(),
@@ -70,7 +70,7 @@ class TasksPage extends StatelessWidget {
               onPressed: () {
                 showModalBottomSheet<void>(
                   context: context,
-                  builder: (context) => SettingSheet.withDependencies(),
+                  builder: (context) => SettingSheet.wrapped(),
                 );
               },
             ),
@@ -111,7 +111,7 @@ class _Body extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final doc = docs[index];
-                return TaskTile.withDependencies(doc);
+                return TaskTile.wrapped(doc);
               },
               childCount: docs.length,
             ),

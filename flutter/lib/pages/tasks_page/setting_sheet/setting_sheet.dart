@@ -11,7 +11,7 @@ class SettingSheet extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  static Widget withDependencies() {
+  static Widget wrapped() {
     return ChangeNotifierProvider<Model>(
       create: (context) => Model(
         authenticator: Provider.of(context, listen: false),

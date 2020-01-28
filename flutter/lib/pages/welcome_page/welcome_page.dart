@@ -9,7 +9,7 @@ import 'model.dart';
 class WelcomePage extends StatelessWidget {
   const WelcomePage._({Key key}) : super(key: key);
 
-  static Widget withDependencies() {
+  static Widget wrapped() {
     return ChangeNotifierProvider<Model>(
       create: (context) => Model(
         authenticator: Provider.of(context, listen: false),

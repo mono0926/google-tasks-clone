@@ -20,18 +20,24 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'messages';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "accountExistsWithDifferentCredential" : MessageLookupByLibrary.simpleMessage("同一のメールアドレスに紐付いた他のアカウントで登録済みなので、そちらからログインしてください。"),
-    "buttonDone" : MessageLookupByLibrary.simpleMessage("DONE"),
-    "buttonUndo" : MessageLookupByLibrary.simpleMessage("UNDO"),
-    "copiedToPasteboard" : MessageLookupByLibrary.simpleMessage("コピーしました。"),
-    "errorInvalidPassword" : MessageLookupByLibrary.simpleMessage("パスワードが違います"),
-    "errorOccurred" : MessageLookupByLibrary.simpleMessage("エラーが発生しました"),
-    "errorRequiresRecentLogin" : MessageLookupByLibrary.simpleMessage("その操作を実行するためには、再ログインが必要です。"),
-    "errorTooManyRequests" : MessageLookupByLibrary.simpleMessage("連続してログインに失敗したため、しばらく利用できません"),
-    "errorUserDisabled" : MessageLookupByLibrary.simpleMessage("アプリの利用制限がかかっているため、ご利用できません。"),
-    "notImplemented" : MessageLookupByLibrary.simpleMessage("未実装です"),
-    "taskDeleted" : MessageLookupByLibrary.simpleMessage("1件のタスクを削除しました"),
-    "welcomeTitle" : MessageLookupByLibrary.simpleMessage("Welcome to Tasks")
-  };
+  static _notInlinedMessages(_) => <String, Function>{
+        "accountExistsWithDifferentCredential":
+            MessageLookupByLibrary.simpleMessage(
+                "同一のメールアドレスに紐付いた他のアカウントで登録済みなので、そちらからログインしてください。"),
+        "buttonDone": MessageLookupByLibrary.simpleMessage("DONE"),
+        "buttonUndo": MessageLookupByLibrary.simpleMessage("UNDO"),
+        "copiedToPasteboard": MessageLookupByLibrary.simpleMessage("コピーしました。"),
+        "errorInvalidPassword":
+            MessageLookupByLibrary.simpleMessage("パスワードが違います"),
+        "errorOccurred": MessageLookupByLibrary.simpleMessage("エラーが発生しました"),
+        "errorRequiresRecentLogin":
+            MessageLookupByLibrary.simpleMessage("その操作を実行するためには、再ログインが必要です。"),
+        "errorTooManyRequests":
+            MessageLookupByLibrary.simpleMessage("連続してログインに失敗したため、しばらく利用できません"),
+        "errorUserDisabled":
+            MessageLookupByLibrary.simpleMessage("アプリの利用制限がかかっているため、ご利用できません。"),
+        "notImplemented": MessageLookupByLibrary.simpleMessage("未実装です"),
+        "taskDeleted": MessageLookupByLibrary.simpleMessage("1件のタスクを削除しました"),
+        "welcomeTitle": MessageLookupByLibrary.simpleMessage("Welcome to Tasks")
+      };
 }

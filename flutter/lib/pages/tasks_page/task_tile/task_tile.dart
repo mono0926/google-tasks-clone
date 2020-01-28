@@ -10,7 +10,7 @@ import 'task_model.dart';
 class TaskTile extends StatelessWidget {
   const TaskTile._({Key key}) : super(key: key);
 
-  static Widget withDependencies(TaskDoc doc) {
+  static Widget wrapped(TaskDoc doc) {
     return ChangeNotifierProvider<TaskModel>(
       key: ValueKey(doc.id),
       create: (context) => TaskModel(

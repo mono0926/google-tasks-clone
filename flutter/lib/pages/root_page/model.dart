@@ -26,7 +26,10 @@ class Model with SubscriptionHolderMixin {
           })
           .distinct((a, b) => a == b)
           .listen(
-            (routeName) => navigator.navigator.pushReplacementNamed(routeName),
+            (routeName) {
+              navigator.popToRoot();
+              navigator.navigator.pushReplacementNamed(routeName);
+            },
           ),
     );
   }

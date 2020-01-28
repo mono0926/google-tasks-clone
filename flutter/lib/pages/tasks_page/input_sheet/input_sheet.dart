@@ -8,7 +8,7 @@ import 'model.dart';
 class InputSheet extends StatelessWidget {
   const InputSheet._({Key key}) : super(key: key);
 
-  static Widget withDependencies() {
+  static Widget wrapped() {
     return ChangeNotifierProvider<Model>(
       create: (context) => Model(
         service: Provider.of(context, listen: false),
@@ -179,7 +179,7 @@ Future _showDueDateTimeDialog(BuildContext context) async {
   final model = Provider.of<Model>(context, listen: false)..saveFocus();
   await showDialog<void>(
     context: context,
-    builder: (context) => DueDateTimeDialog.withDependencies(
+    builder: (context) => DueDateTimeDialog.wrapped(
       model: model,
     ),
   );

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class TaskDetailPage extends StatelessWidget {
   const TaskDetailPage._({Key key}) : super(key: key);
 
-  static Widget withDependencies(Object arguments) {
+  static Widget wrapped(Object arguments) {
     final model = convertToModelFromArguments(arguments);
     return ChangeNotifierProvider.value(
       value: model,

@@ -26,6 +26,11 @@ void main() {
             userObserver: Provider.of(context, listen: false),
           ),
         ),
+        Provider(
+          create: (context) => TasksService(
+            authenticator: Provider.of(context, listen: false),
+          ),
+        ),
       ],
       child: const App(),
     ),
