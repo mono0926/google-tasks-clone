@@ -33,12 +33,10 @@ class Router with SubscriptionHolderMixin {
                 : TasksPage.routeName;
           })
           .distinct((a, b) => a == b)
-          .listen(
-            (routeName) {
-              navigator.popToRoot();
-              navigator.navigator.pushReplacementNamed(routeName);
-            },
-          ),
+          .listen((routeName) {
+            navigator.popToRoot();
+            navigator.navigator.pushReplacementNamed(routeName);
+          }),
     );
   }
 
