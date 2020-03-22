@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: Provider.of<AppNavigator>(context).key,
+      navigatorKey: Provider.of(context),
       theme: buildTheme(),
       darkTheme: ThemeData.dark(),
       navigatorObservers: [RouteObserverProvider.of(context)],

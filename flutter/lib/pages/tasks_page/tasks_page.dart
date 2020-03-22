@@ -103,7 +103,7 @@ class _Body extends StatelessWidget {
               ),
               child: Text(
                 'My Tasks',
-                style: Theme.of(context).textTheme.headline,
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
           ),

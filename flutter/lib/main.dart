@@ -17,13 +17,14 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => AppNavigator()),
+        Provider(create: (context) => GlobalKey<NavigatorState>()),
         RouteObserverProvider(),
         DisposableProvider(create: (context) => Authenticator()),
         DisposableProvider(
           create: (context) => Router(
             authenticator: Provider.of(context, listen: false),
-            navigator: Provider.of<AppNavigator>(context, listen: false),
+            navigatorKey:
+                Provider.of<GlobalKey<NavigatorState>>(context, listen: false),
           ),
         ),
         Provider(create: (context) => UserObserver()),

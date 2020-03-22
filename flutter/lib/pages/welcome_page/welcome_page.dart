@@ -43,7 +43,7 @@ class WelcomePage extends StatelessWidget {
             const SizedBox(height: 32),
             Text(
               L10n.of(context).welcomeTitle,
-              style: Theme.of(context).textTheme.headline,
+              style: Theme.of(context).textTheme.headline5,
             ),
             const SizedBox(height: 16),
             const Text(

@@ -173,9 +173,13 @@ PODS:
     - Firebase/Core
     - Firebase/Firestore (~> 6.0)
     - Flutter
+  - cloud_firestore_web (0.1.0):
+    - Flutter
   - cloud_functions (0.0.1):
     - Firebase/Core
     - Firebase/Functions (~> 6.0)
+    - Flutter
+  - cloud_functions_web (1.0.0):
     - Flutter
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -382,6 +386,8 @@ PODS:
   - nanopb/encode (0.3.9011)
   - path_provider (0.0.1):
     - Flutter
+  - path_provider_macos (0.0.1):
+    - Flutter
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.2)
   - sqflite (0.0.1):
@@ -396,7 +402,9 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
+  - cloud_functions_web (from `.symlinks/plugins/cloud_functions_web/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
@@ -409,6 +417,7 @@ DEPENDENCIES:
   - google_sign_in_web (from `.symlinks/plugins/google_sign_in_web/ios`)
   - mono_kit (from `.symlinks/plugins/mono_kit/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
@@ -455,8 +464,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  cloud_firestore_web:
+    :path: ".symlinks/plugins/cloud_firestore_web/ios"
   cloud_functions:
     :path: ".symlinks/plugins/cloud_functions/ios"
+  cloud_functions_web:
+    :path: ".symlinks/plugins/cloud_functions_web/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
@@ -481,6 +494,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mono_kit/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
@@ -494,18 +509,20 @@ SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
-  cloud_firestore: c5d1e4d114eecb1dfb535f008435685bcf6063f1
-  cloud_functions: c4bd92b7867760f21811061e8a2ef34a1a4e764c
+  cloud_firestore: 31454d48df21f3e1a900015e36143c0d46a304b7
+  cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
+  cloud_functions: cc76d33c7983c9057ef1163a560734595133091c
+  cloud_functions_web: ec883775f4a3b3fad943918d2cdad4fbf51cdbf0
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
-  firebase_analytics: d83001d25b9a58ca5eda8db0ef566c02d7af5258
-  firebase_auth: 697625863042c7af7a01b5f1a4cfff37d30743b4
+  firebase_analytics: dacdcfc524d722fff13dcff942f0dfa47e6be567
+  firebase_auth: 4ee3a54d3f09434c508c284a62f895a741a30637
   firebase_auth_web: 0955c07bcc06e84af76b9d4e32e6f31518f2d7de
-  firebase_core: 9bd2e66a276153e219a87ff39dfecb6b671f524a
+  firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
-  firebase_crashlytics: 0066966d67fee22065fdcf1c9703a97c4fdbae2e
-  firebase_performance: bed42cee45cd3a44aadaf3e4fa18140f2fec3814
+  firebase_crashlytics: bd8c58df07f107cb7e1a20cb190b9a468e0a69fd
+  firebase_performance: f96b62a3e5164bbe8657351d2f02cf5a933f63f4
   FirebaseABTesting: 0d10f3cdc3fa00f3f175b5b56c1003c8e888299f
   FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -538,6 +555,7 @@ SPEC CHECKSUMS:
   mono_kit: 67c15c1486e232d7f44ac47286933e80aa02f7a3
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
@@ -547,4 +565,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 083258d7f5e80b42ea9bfee905fe93049bc04c64
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

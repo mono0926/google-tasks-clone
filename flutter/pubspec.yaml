@@ -17,7 +17,7 @@ dependencies:
   firebase_crashlytics: any
   firestore_ref: any
   json_annotation: any
-  mono_kit: any
+  mono_kit: ^0.14.0-dev
   firebase_performance: any
   provider: any
   route_observer_mixin: any
@@ -27,6 +27,7 @@ dependencies:
   google_sign_in: any
   cloud_functions: any
   cached_network_image: any
+  flutter_svg: ^0.17.3+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

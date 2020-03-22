@@ -16,13 +16,14 @@ typedef WidgetPageBuilder = Widget Function(
 class Router with SubscriptionHolderMixin {
   Router({
     @required this.authenticator,
-    @required this.navigator,
+    @required this.navigatorKey,
   }) {
     _handleRootPage();
   }
 
   final Authenticator authenticator;
-  final AppNavigator navigator;
+  final GlobalKey<NavigatorState> navigatorKey;
+  NavigatorState get _navigator => navigatorKey.currentState;
 
   void _handleRootPage() {
     subscriptionHolder.add(
@@ -31,8 +32,9 @@ class Router with SubscriptionHolderMixin {
               firUser == null ? WelcomePage.routeName : TasksPage.routeName)
           .distinct((a, b) => a == b)
           .listen((routeName) {
-        navigator.popToRoot();
-        navigator.navigator.pushReplacementNamed(routeName);
+        _navigator
+          ..popToRoot()
+          ..pushReplacementNamed(routeName);
       }),
     );
   }
