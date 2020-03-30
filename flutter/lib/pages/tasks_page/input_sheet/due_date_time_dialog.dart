@@ -145,9 +145,9 @@ class _Picker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<_DateModel>(context);
-    return MonthPicker(
-      selectedDate: model.value.dateTime,
-      onChanged: (date) => model.value = model.value.copyWith(date),
+    return CalendarDatePicker(
+      initialDate: model.value.dateTime,
+      onDateChanged: (date) => model.value = model.value.copyWith(date),
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 3650)),
     );
