@@ -132,7 +132,7 @@ class _DoneButton extends StatelessWidget {
       onPressed: () {
         final due = dateModel.value;
         model.task = task.copyWith(
-          due: due ?? task.due ?? const Due(null, includeTime: false),
+          due: due ?? task.due ?? Due(null, includeTime: false),
         );
         Navigator.of(context).pop();
       },
@@ -147,7 +147,9 @@ class _Picker extends StatelessWidget {
     final model = Provider.of<_DateModel>(context);
     return CalendarDatePicker(
       initialDate: model.value.dateTime,
-      onDateChanged: (date) => model.value = model.value.copyWith(date),
+      onDateChanged: (date) => model.value = model.value.copyWith(
+        dateTime: date,
+      ),
       firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 3650)),
     );

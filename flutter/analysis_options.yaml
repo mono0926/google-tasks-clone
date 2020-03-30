@@ -5,4 +5,5 @@ analyzer:
   exclude:
     - lib/l10n/messages_*.dart
     - lib/**/*.g.dart
+    - lib/**/*.freezed.dart
     - ios/**

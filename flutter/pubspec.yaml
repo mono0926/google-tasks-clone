@@ -15,7 +15,8 @@ dependencies:
   firebase_auth: any
   firebase_core: any
   firebase_crashlytics: any
-  firestore_ref: any
+  firestore_ref: ^0.8.0-dev
+  freezed_annotation: any
   json_annotation: any
   mono_kit: ^0.14.0-dev
   firebase_performance: any
@@ -33,6 +34,7 @@ dev_dependencies:
     sdk: flutter
   intl_translation: any
   build_runner: any
+  freezed: any
   json_serializable: any
   pedantic_mono: any
 flutter:

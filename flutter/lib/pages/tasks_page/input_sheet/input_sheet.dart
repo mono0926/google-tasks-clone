@@ -127,7 +127,9 @@ class _DueButton extends StatelessWidget {
       child: DueButton(
         due: due,
         onPressed: () => _showDueDateTimeDialog(context),
-        onClosePressed: () => model.task = model.task.copyWith(clearDue: true),
+        onClosePressed: () => model.task = model.task.copyWith(
+          due: null,
+        ),
       ),
     );
   }

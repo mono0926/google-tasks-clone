@@ -1,33 +1,18 @@
 import 'package:firestore_ref/firestore_ref.dart';
 import 'package:flutter/foundation.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'due.freezed.dart';
 part 'due.g.dart';
 
-@JsonSerializable()
-@immutable
-class Due {
-  const Due(
-    this.dateTime, {
-    this.includeTime = false,
-  });
+@freezed
+abstract class Due with _$Due {
+  const factory Due(
+    @TimestampConverter() DateTime dateTime, {
+    @Default(false) bool includeTime,
+  }) = _Due;
 
   factory Due.fromJson(Map<String, dynamic> json) => _$DueFromJson(json);
-  Map<String, dynamic> toJson() => _$DueToJson(this);
-
-  @timestampJsonKey
-  final DateTime dateTime;
-  final bool includeTime;
-
-  Due copyWith(
-    DateTime dateTime, {
-    bool includeTime,
-  }) {
-    return Due(
-      dateTime ?? this.dateTime,
-      includeTime: includeTime ?? this.includeTime,
-    );
-  }
 }
 
 class DueField {
